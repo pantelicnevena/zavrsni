@@ -1,0 +1,34 @@
+<h3 xmlns="http://www.w3.org/1999/html">Lista kategorija</h3>
+<button class="btn btn-success" ng-click="izmeniKategoriju('novi')" data-toggle="modal" href="#editModal">
+    <i class="icon-calendar icon-white"></i>&nbsp;Kreiraj novu kategoriju</button>
+		<label style="position: absolute; right: 20%;">Pronađi kategoriju: &nbsp;</label>
+		<input ng-model="search.$" style="position: absolute; right: 8%;">
+		
+<table id="searchObjResults" class='table table-striped'>
+    <thead>
+    <tr>
+        <th>Kategorija</th>
+        <th>&nbsp;</th>
+    </tr>
+    </thead>
+    <tbody>
+	<tr>	
+		<td>
+			<label ng-click="orderByField = 'nazivKategorije'; reverseSort = !reverseSort">
+				<b>Naziv</b>
+				<span ng-show="orderByField == 'nazivKategorije'">
+					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-down"></span>
+					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-up"></span>
+				</span>
+			</label>
+		</td>
+		<td></td>
+	</tr>
+    <tr ng-repeat='kategorija in kategorije | filter:search:strict | orderBy:orderByField:reverseSort'>
+        <td>{{kategorija.nazivKategorije}}</td>
+        <td><button role='button' class='btn btn-warning' ng-click="izmeniKategoriju(kategorija);" data-toggle="modal" href="#editModal">Izmeni</button></td>
+    </tr>
+    </tbody>
+</table>
+<div class="modal fade"  tabindex="-1" role="dialog" ng-include="'view/kategorija-detalji.html'" id="editModal" aria-hidden="true"></div>
+</div>

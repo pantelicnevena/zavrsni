@@ -1,0 +1,42 @@
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Zatvori</span>
+            </button>
+            <h4 class="modal-title">Artikal</h4>
+        </div>
+
+        <div class="modal-body">
+            <form>
+                <label>Naziv artikla</label><br/>
+                <input type='text' ng-model="artikal.nazivArtikla"/><br/>
+                <label>Ambalaža</label><br/>
+                <input type='text' ng-model="artikal.ambalaza"/><br/>
+                <label>Rok trajanja</label><br/>
+                <input type='text' ng-model="artikal.rokTrajanja"/><br/>
+                <label>Stanje na zalihama</label><br/>
+                <input type='text' ng-model="artikal.stanjeNaZalihama"/><br/>
+                <label>Cena</label><br/>
+                <input type='text' ng-model="artikal.cena"/><br/>
+                <label>Distributer</label><br/>                              <!--dropdown-->
+                <select ng-model="artikal.distributerID" ng-options="distributer.distributerID as distributer.nazivDistributera for distributer in distributeri | orderBy:'nazivDistributera'">
+                    <option></option>
+                </select><br/>
+                <!--<input type='text' ng-model="artikal.distributerID"/><br/>-->
+                <label>Kategorija</label><br/>                               <!--dropdown-->
+                <select ng-model="artikal.kategorijaID" ng-options="kategorija.kategorijaID as kategorija.nazivKategorije for kategorija in kategorije | orderBy:'nazivKategorije'">
+                    <option></option>
+                </select><br/>
+                <!--<input type='text' ng-model="artikal.kategorijaID"/><br/>-->
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="delete(artikal)">Obriši artikal</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="save(artikal)">Sačuvaj izmene</button>
+        </div>
+    </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->

@@ -1,0 +1,23 @@
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Zatvori</span>
+            </button>
+            <h4 class="modal-title">Distributer</h4>
+        </div>
+        <div class="modal-body">
+            <form>
+                <label>Naziv distributera</label><br/>
+                <input type='text' ng-model="distributer.nazivDistributera"/><br/>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="delete(distributer)">Obriši distributera</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="save(distributer)">Sačuvaj izmene</button>
+        </div>
+    </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->

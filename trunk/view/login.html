@@ -1,0 +1,25 @@
+
+<div class="col-md-4 col-md-offset-4">
+
+<h3>Login</h3>
+<br/>
+    <div class="alert alert-error" ng-show="loginError">Korisničko ime i/ili korisnička šifra su netačni. Proverite Vaše podatke.</div>
+    <form rele="form" name="form1">
+        <p>Dobrodošli : <span>{{konobar.korisnickoIme}}</span></p><br/>
+        <div class="input-group">
+			<span class="input-group-addon">@</span>
+			<input type='text' class='form-control' ng-model='konobar.korisnickoIme' placeholder='Korisničko ime' required/>
+		</div>
+		<br/>
+        <div class="input-group">
+			<span class="input-group-addon"><span class='glyphicon glyphicon-lock'></span></span>
+			<input type='password' class='form-control' ng-model='konobar.korisnickaSifra' placeholder='Korisnička šifra' required/>
+		</div>
+		<br/>
+        <button class="btn btn-info btn-block" type="submit" ng-click="login(konobar)" ng-disabled="form1.$invalid">Login</button>
+        <br/>
+        <p charset="UTF-8">{{msgtxt}}</p>
+    </form>
+	
+	
+</div>
