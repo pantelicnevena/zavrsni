@@ -1,0 +1,105 @@
+<h3 xmlns="http://www.w3.org/1999/html">Lista porudzbina</h3>
+
+<button class="btn btn-success" ng-click="izmeniPorudzbinu('novi')" data-toggle="modal" href="#editModal">
+    <i class="icon-calendar icon-white"></i>
+	&nbsp;Kreiraj novu porudžbinu
+</button>
+
+<label style="position: absolute; right: 23%;">Pronađi porudžbinu: &nbsp;</label>
+<input ng-model="search.$" style="position: absolute; right: 8%;">
+		
+<table id="searchObjResults" class='table table-striped'>
+    <thead>
+    <tr>
+        <th>Porudžbina</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr style="height: 45px;">
+		<td>
+			<label ng-click="orderByField = 'porudzbinaID'; reverseSort = !reverseSort">
+				<b>ID</b>
+				<span ng-show="orderByField == 'porudzbinaID'">
+					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-down"></span>
+					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-up"></span>
+				</span>
+			</label>
+		</td>
+		<td>
+			<label ng-click="orderByField = 'datumPorudzbine'; reverseSort = !reverseSort">
+				<b>Datum</b>
+				<span ng-show="orderByField == 'datumPorudzbine'">
+					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-down"></span>
+					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-up"></span>
+				</span>
+			</label>
+		</td>
+		<td>
+			<label ng-click="orderByField = 'razduzeno'; reverseSort = !reverseSort">
+				<b>Razduženo</b>
+				<span ng-show="orderByField == 'razduzeno'">
+					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-down"></span>
+					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-up"></span>
+				</span>
+			</label>
+		</td>
+		<td>
+			<label ng-click="orderByField = 'napravljena'; reverseSort = !reverseSort">
+				<b>Napravljena</b>
+				<span ng-show="orderByField == 'napravljena'">
+					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-down"></span>
+					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-up"></span>
+				</span>
+			</label>
+		</td>
+		<td>
+			<label ng-click="orderByField = 'ime'; reverseSort = !reverseSort">
+				<b>Konobar</b>
+				<span ng-show="orderByField == 'ime'">
+					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-down"></span>
+					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-up"></span>
+				</span>
+			</label>
+		</td>
+		<td>
+			<label ng-click="orderByField = 'stoID'; reverseSort = !reverseSort">
+				<b>Sto</b>
+				<span ng-show="orderByField == 'stoID'">
+					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-down"></span>
+					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-up"></span>
+				</span>
+			</label>
+		</td>
+		<td>
+			<label ng-click="orderByField = 'razduzenjeID'; reverseSort = !reverseSort">
+				<b>Razduženje</b>
+				<span ng-show="orderByField == 'razduzenjeID'">
+					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-down"></span>
+					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-up"></span>
+				</span>
+			</label>
+		</td>
+	</tr>
+    <tr ng-repeat='mesecna in mesecni | filter:search:strict | orderBy:orderByField:reverseSort'>
+        <td>{{mesecna.porudzbinaID}}</td>
+        <td>{{mesecna.datumPorudzbine}}</td>
+        <td>{{mesecna.razduzeno}}</td>
+        <td>{{mesecna.napravljena}}</td>
+        <td>{{mesecna.ime}} {{mesecna.prezime}}</td>
+        <td>{{mesecna.stoID}}</td>
+        <td>{{mesecna.razduzenjeID}}</td>
+    </tr>
+	
+    </tbody>
+</table>
+
+
+<div class="modal fade"  tabindex="-1" role="dialog" ng-include="'view/porudzbina-detalji.html'" id="editModal" aria-hidden="true"></div>
+</div>

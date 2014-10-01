@@ -1,0 +1,43 @@
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Zatvori</span>
+            </button>
+            <h4 class="modal-title">Porudžbina</h4>
+        </div>
+        <div class="modal-body">
+            <form>
+                <label>Datum porudžbine</label><br/>
+                <input type='text' ng-model="porudzbina.datumPorudzbine"/><br/>
+                <label>Razduženo</label><br/>
+                <select ng-model="porudzbina.razduzeno">
+                    <option value="0">NE</option>
+                    <option value="1">DA</option>
+                </select><br/>
+                <label>Napravljena</label><br/>
+                <select ng-model="porudzbina.napravljena">
+                    <option value="0">NE</option>
+                    <option value="1">DA</option>
+                </select><br/>
+                <label>Konobar</label><br/>
+                <select ng-model="porudzbina.konobarID" ng-options="konobar.konobarID as konobar.ime+' '+konobar.prezime for konobar in konobari | orderBy:'ime'">
+                    <option></option>
+                </select><br/>
+                <label>Sto</label><br/>
+                <select ng-model="porudzbina.stoID" ng-options="sto.stoID as sto.brojStola for sto in stolovi">
+                    <option></option>
+                </select><br/>
+                <label>Razduženje</label><br/>
+                <input type='text' ng-model="porudzbina.razduzenjeID"/><br/>
+			</form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="delete(porudzbina)">Obriši porudžbinu</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="save(porudzbina)">Sačuvaj izmene</button>
+        </div>
+    </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->

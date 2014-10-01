@@ -1,0 +1,31 @@
+<h3 xmlns="http://www.w3.org/1999/html">Lista stolova</h3>
+<button class="btn btn-success" ng-click="izmeniSto('novi')" data-toggle="modal" href="#editModal">
+    <i class="icon-calendar icon-white"></i>&nbsp;Kreiraj novi sto</button>
+<table id="searchObjResults" class='table table-striped'>
+    <thead>
+    <tr>
+        <th>Sto</th>
+        <th>&nbsp;</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+		<td>
+			<label ng-click="orderByField = 'brojStola'; reverseSort = !reverseSort">
+				<b>Broj stola</b>
+				<span ng-show="orderByField == 'brojStola'">
+					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-down"></span>
+					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-down"></span>
+				</span>
+			</label>
+		</td>
+		<td><b></b></td>
+	</tr>
+    <tr ng-repeat='sto in stolovi | filter:search:strict '>
+        <td>{{sto.brojStola}}</td>
+        <td><button role='button' class='btn btn-warning' ng-click="izmeniSto(sto);" data-toggle="modal" href="#editModal">Izmeni</button></td>
+    </tr>
+    </tbody>
+</table>
+<div class="modal fade"  tabindex="-1" role="dialog" ng-include="'view/sto-detalji.html'" id="editModal" aria-hidden="true"></div>
+</div>

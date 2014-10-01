@@ -1,0 +1,75 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Zatvori</span>
+            </button>
+            <h4 class="modal-title">Dodaj sliku</h4>
+        </div>
+            <div id="ng-app" ng-app="upload">
+                <div ng-controller="AppController" nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter">
+                    <div class="container">
+                        <div class="row"><br/>
+                            <div class="col-md-3" style="float: none;">
+                                <input type="file" nv-file-select="" uploader="uploader" />
+                            </div><br/>
+                            <div class="col-md-9" style="margin-bottom: 40px; float: none;">
+                                <table class="table" style="width: 200px;">
+                                    <thead>
+                                    <tr>
+                                        <th width="50%">Name</th>
+                                        <th ng-show="uploader.isHTML5">Veličina</th>
+                                        <th ng-show="uploader.isHTML5">Stanje</th>
+                                        <th>Status</th>
+                                        <th>Akcije</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="item in uploader.queue">
+                                        <td><strong>{{ item.file.name }}</strong></td>
+                                        <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                        <td ng-show="uploader.isHTML5">
+                                            <div class="progress" style="margin-bottom: 0;">
+                                                <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                            <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                            <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                                        </td>
+                                        <td nowrap>
+                                            <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                                <span class="glyphicon glyphicon-upload"></span> Postavi
+                                            </button>
+                                            <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
+                                                <span class="glyphicon glyphicon-ban-circle"></span> Prekini
+                                            </button>
+                                            <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                                <span class="glyphicon glyphicon-trash"></span> Obriši
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                                <div style="width: 300px">
+                                    <div>
+                                        Stanje:
+                                        <div class="progress" style="">
+                                            <div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+

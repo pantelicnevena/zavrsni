@@ -1,0 +1,97 @@
+<h3 xmlns="http://www.w3.org/1999/html">Lista artikala</h3>
+<button class="btn btn-success" ng-click="izmeniArtikal('novi')" data-toggle="modal" href="#editModal">
+	<i class="icon-calendar icon-white"></i>
+	&nbsp;Kreiraj novi artikal
+</button>
+<label style="position: absolute; right: 20%;">Pronađi artikal: &nbsp;</label>
+<input ng-model="search.$" style="position: absolute; right: 8%;">
+		
+<table id="searchObjResults" class='table table-striped'>
+    <thead>
+    <tr>
+        <th>Artikal</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr style="height: 45px;">
+		<td>
+			<label ng-click="orderByField = 'nazivArtikla'; reverseSort = !reverseSort">
+				<b>Naziv</b>
+				<span ng-show="orderByField == 'nazivArtikla'">
+					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-down"></span>
+					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-up"></span>
+				</span>
+			</label>
+		</td>
+		<td>
+			<label ng-click="orderByField = 'ambalaza'; reverseSort = !reverseSort">
+				<b>Ambalaža</b>
+				<span ng-show="orderByField == 'ambalaza'">
+					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-down"></span>
+					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-up"></span>
+				</span>
+			</label>
+		</td>
+		<td>
+			<label ng-click="orderByField = 'rokTrajanja'; reverseSort = !reverseSort">
+				<b>Rok trajanja</b>
+				<span ng-show="orderByField == 'rokTrajanja'">
+					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-down"></span>
+					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-up"></span>
+				</span>
+			</label>
+		</td>
+		<td>
+			<label ng-click="orderByField = 'stanjeNaZalihama'; reverseSort = !reverseSort">
+				<b>Zalihe</b>
+				<span ng-show="orderByField == 'stanjeNaZalihama'">
+					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-down"></span>
+					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-up"></span>
+				</span>
+			</label>
+		</td>
+		<td>
+			<label ng-click="orderByField = 'cena'; reverseSort = !reverseSort">
+				<b>Cena</b>
+				<span ng-show="orderByField == 'cena'">
+					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-down"></span>
+					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-up"></span>
+				</span>
+			</label>
+		</td>
+		<td>
+			<label ng-click="orderByField = 'distributer'; reverseSort = !reverseSort">
+				<b>Distributer</b>
+				<span ng-show="orderByField == 'distributer'">
+					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-down"></span>
+					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-up"></span>
+				</span>
+			</label>
+		</td>
+		<td>
+			<label ng-click="orderByField = 'kategorija'; reverseSort = !reverseSort">
+				<b>Kategorija</b>
+				<span ng-show="orderByField == 'kategorija'">
+					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-down"></span>
+					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-up"></span>
+				</span>
+			</label>
+		</td>
+		<td><b></b></td></tr>
+    <tr ng-repeat='artikal in artikli | orderBy:orderByField:reverseSort | filter:search:strict'>
+        <td>{{artikal.nazivArtikla}}</td>
+        <td>{{artikal.ambalaza}}</td>
+        <td>{{artikal.rokTrajanja}}</td>
+        <td>{{artikal.stanjeNaZalihama}}</td>
+        <td>{{artikal.cena}} din.</td>
+        <td>{{artikal.distributerID}}</td>
+        <td>{{artikal.nazivKategorije}}</td>
+        <td><button role='button' class='btn btn-warning' ng-click="izmeniArtikal(artikal);" data-toggle="modal" href="#editModal">Izmeni</button></td>
+    </tr>
+    </tbody>
+</table>
+<div class="modal fade"  tabindex="-1" role="dialog" ng-include="'view/artikal-detalji.html'" id="editModal" aria-hidden="true"></div>
+</div>

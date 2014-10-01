@@ -1,0 +1,51 @@
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Zatvori</span>
+                </button>
+                <h4 class="modal-title">Konobar &nbsp;&nbsp;&nbsp;{{msg}}</h4>
+            </div>
+            <div class="modal-body">
+                <form >
+                    <label>Ime</label><br/>
+                    <input type='text' ng-model="konobar.ime"/><br/>
+                    <label>Prezime</label><br/>
+                    <input type='text' ng-model="konobar.prezime"/><br/>
+                    <label>Godina Rođenja</label><br/>
+                    <input type='text' ng-model="konobar.godinaRodjenja"/><br/>
+                    <label>Mesto Rođenja</label><br/>
+                    <input type='text' ng-model="konobar.mestoRodjenja"/><br/>
+                    <label>Korisničko ime</label><br/>
+                    <input type='text' ng-model="konobar.korisnickoIme"/><br/>
+                    <label>Korisnička šifra</label><br/>
+                    <input type='text' ng-model="konobar.korisnickaSifra"/><br/>
+                    <label>Uloga</label><br/>
+                    <select ng-model="konobar.role">
+                        <option value="2">Zaposleni</option>
+                        <option value="4">Administrator</option>
+                    </select><br/>
+                    <label>Slika</label><br/>
+                    <input type='text' ng-model="konobar.slika"/>
+
+                    <!--<span class="btn  fileinput-button" ng-class="{disabled: disabled}">                            //upload slike
+                        <input type="file" name="files[]" multiple ng-disabled="disabled" ng-model="konobar.slika">
+                    </span>-->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="delete(konobar)">Obriši konobara</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="save(konobar)">Sačuvaj izmene</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+    <style>
+        .my-drop-zone { border: dotted 3px lightgray; }
+        .nv-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */
+        .another-file-over-class { border: dotted 3px green; }
+
+        html, body { height: 100%; }
+    </style>

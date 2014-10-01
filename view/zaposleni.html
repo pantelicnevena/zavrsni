@@ -1,0 +1,104 @@
+<h3 xmlns="http://www.w3.org/1999/html">Lista konobara</h3>
+<meta name="viewport" content="initial-scale=1">
+
+
+
+<button class="btn btn-success" ng-click="izmeniKonobara('novi')" data-toggle="modal" href="#editModal">
+    <i class="icon-calendar icon-white"></i>&nbsp;Kreiraj novog konobara</button>
+		<label style="position: absolute; right: 18%;">Pronađi zaposlenog: &nbsp;</label>
+		<input ng-model="search.$" style="position: absolute; right: 2%;">
+<div class="table-responsive">		
+
+<table id="searchObjResults" class='table table-striped'>
+    <thead>
+    <tr>
+        <th>Konobar</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+		<th>&nbsp;</th>
+		<th>&nbsp;</th>
+		<th>&nbsp;</th>
+        <th>&nbsp;</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr style="height: 45px;">
+		<td>
+			<label ng-click="orderByField = 'ime'; reverseSort = !reverseSort">
+				<b>Ime</b>
+				<span ng-show="orderByField == 'ime'">
+					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-up"></span>
+					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-down"></span>
+				</span>
+			</label>
+		</td>
+		<td>
+			<label ng-click="orderByField = 'prezime'; reverseSort = !reverseSort">
+				<b>Prezime</b>
+				<span ng-show="orderByField == 'prezime'">
+					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-up"></span>
+					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-down"></span>
+				</span>
+			</label>
+		</td>
+		<td>
+			<label ng-click="orderByField = 'godinaRodjenja'; reverseSort = !reverseSort">
+				<b>Godina rođenja</b>
+				<span ng-show="orderByField == 'godinaRodjenja'">
+					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-up"></span>
+					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-down"></span>
+				</span>
+			</label>
+		</td>
+		<td>
+			<label ng-click="orderByField = 'mestoRodjenja'; reverseSort = !reverseSort">
+				<b>Mesto rođenja</b>
+				<span ng-show="orderByField == 'mestoRodjenja'">
+					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-up"></span>
+					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-down"></span>
+				</span>
+			</label>
+		</td>
+		<td>
+			<label ng-click="orderByField = 'korisnickoIme'; reverseSort = !reverseSort">
+				<b>Korisničko ime</b>
+				<span ng-show="orderByField == 'korisnickoIme'">
+					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-up"></span>
+					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-down"></span>
+				</span>
+			</label>
+		</td>
+		<td>
+			<label ng-click="orderByField = 'korisnickaSifra'; reverseSort = !reverseSort">
+				<b>Korisnička šifra</b>
+				<span ng-show="orderByField == 'korisnickaSifra'">
+					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-up"></span>
+					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-down"></span>
+				</span>
+			</label>
+		</td>
+		<td><b></b></td><td><b></b></td>
+	</tr>
+    <tr ng-repeat='konobar in konobari | filter:search:strict | orderBy:orderByField:reverseSort'>
+        <td>{{konobar.ime}}</td>
+        <td>{{konobar.prezime}}</td>
+        <td>{{konobar.godinaRodjenja}}</td>
+        <td>{{konobar.mestoRodjenja}}</td>
+        <td>{{konobar.korisnickoIme}}</td>
+        <td>{{konobar.korisnickaSifra}}</td>
+        <td><button role='button' class='btn btn-warning' ng-click="izmeniKonobara(konobar);" data-toggle="modal" href="#editModal">Izmeni</button></td>
+        <!--<td><input type="file" nv-file-select="" class='btn btn-info' uploader="uploader" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess"/></td>-->
+		<td><button role='button' class='btn btn-success' data-toggle="modal" href="#editModal2">Slika</button></td>
+		
+    </tr>
+    </tbody>
+</table>
+<div class="paging"></div>
+
+</div>
+
+<div class="modal fade"  tabindex="-1" role="dialog" ng-include="'view/zaposleni-detalji.html'" id="editModal" aria-hidden="true"></div>
+<div class="modal fade"  tabindex="-1" role="dialog" ng-include="'view/upload.html'" id="editModal2" aria-hidden="true"></div>
+</div>
+
