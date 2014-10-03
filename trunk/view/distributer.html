@@ -2,9 +2,10 @@
 <meta name="viewport" content="initial-scale=1">
 <button class="btn btn-success" ng-click="izmeniDistributera('novi')" data-toggle="modal" href="#editModal">
     <i class="icon-calendar icon-white"></i>&nbsp;Kreiraj novog distributera</button>
-		<label style="position: absolute; right: 18%;">Pronađi distributera: &nbsp;</label>
-		<input ng-model="search.$" style="position: absolute; right: 3%;">
-		
+	<div class="pull-right">	
+		<label>Pronađi distributera: &nbsp;</label>
+		<input ng-model="search.$" class="form-control">
+	</div>
 <table id="searchObjResults" class='table table-striped'>
     <thead>
     <tr>

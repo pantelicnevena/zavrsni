@@ -22,19 +22,19 @@ Flight::route('GET /konobar/@konobarID', function($konobarID){
 });
 
 Flight::route('POST /konobar', function(){
-    $konobar = new Konobar("konobarID", "ime", "prezime", "godinaRodjenja", "mestoRodjenja", "korisnickoIme", "korisnickaSifra");
+    $konobar = new Konobar("konobarID", "ime", "prezime", "godinaRodjenja", "mestoRodjenja", "korisnickoIme", "korisnickaSifra", "role", "slika");
     $konobar->unesiKonobara();
 
 });
 
 Flight::route('POST /konobar/@konobarID', function($konobarID){
-    $konobar = new Konobar("konobarID", "ime", "prezime", "godinaRodjenja", "mestoRodjenja", "korisnickoIme", "korisnickaSifra");
+    $konobar = new Konobar("konobarID", "ime", "prezime", "godinaRodjenja", "mestoRodjenja", "korisnickoIme", "korisnickaSifra", "role", "slika");
     $konobar->izmeniKonobara($konobarID);
 
 });
 
 Flight::route('DELETE /konobar/@konobarID', function($konobarID){
-    $konobar = new Konobar("konobarID", "ime", "prezime", "godinaRodjenja", "mestoRodjenja", "korisnickoIme", "korisnickaSifra");
+    $konobar = new Konobar("konobarID", "ime", "prezime", "godinaRodjenja", "mestoRodjenja", "korisnickoIme", "korisnickaSifra", "role", "slika");
     $konobar->obrisiKonobara($konobarID);
 });
 

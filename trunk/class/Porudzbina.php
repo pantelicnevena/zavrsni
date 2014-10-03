@@ -13,9 +13,9 @@ class Porudzbina implements JsonSerializable {
     private $napravljena;
     private $konobarID;
     private $stoID;
-    private $razduzenjeID;
+    private $ukupnaVrednost;
 
-    function __construct($porudzbinaID, $datumPorudzbine, $razduzeno, $napravljena, $konobarID, $stoID, $razduzenjeID)
+    function __construct($porudzbinaID, $datumPorudzbine, $razduzeno, $napravljena, $konobarID, $stoID, $ukupnaVrednost)
     {
         $this->porudzbinaID = $porudzbinaID;
         $this->datumPorudzbine = $datumPorudzbine;
@@ -23,7 +23,7 @@ class Porudzbina implements JsonSerializable {
         $this->napravljena = $napravljena;
         $this->konobarID = $konobarID;
         $this->stoID = $stoID;
-        $this->razduzenjeID = $razduzenjeID;
+        $this->ukupnaVrednost = $ukupnaVrednost;
     }
 
 
@@ -92,19 +92,19 @@ class Porudzbina implements JsonSerializable {
     }
 
     /**
-     * @param mixed $razduzenjeID
+     * @param mixed $ukupnaVrednost
      */
-    public function setRazduzenjeID($razduzenjeID)
+    public function setUkupnaVrednost($ukupnaVrednost)
     {
-        $this->razduzenjeID = $razduzenjeID;
+        $this->ukupnaVrednost = $ukupnaVrednost;
     }
 
     /**
      * @return mixed
      */
-    public function getRazduzenjeID()
+    public function getUkupnaVrednost()
     {
-        return $this->razduzenjeID;
+        return $this->ukupnaVrednost;
     }
 
     /**
@@ -146,7 +146,7 @@ class Porudzbina implements JsonSerializable {
     function __toString()
     {
         // TODO: Implement __toString() method.
-        return $this->porudzbinaID ." ". $this->datumPorudzbine ." ". $this->razduzeno;
+        return $this->porudzbinaID ." ". $this->datumPorudzbine ." ". $this->razduzeno ." ". $this->ukupnaVrednost;
     }
 
     public function jsonSerialize()
@@ -157,7 +157,7 @@ class Porudzbina implements JsonSerializable {
     public static function vratiSvePorudzbine(){
         header ("Content-Type: application/json; charset=utf-8");
         $db = Flight::db();
-        $db->select("porudzbina", 'porudzbina.porudzbinaID, porudzbina.datumPorudzbine, porudzbina.razduzeno, porudzbina.napravljena, porudzbina.stoID, porudzbina.konobarID, konobar.ime, konobar.prezime, porudzbina.razduzenjeID', "konobar", "konobarID", "konobarID", null, null);
+        $db->select("porudzbina", 'porudzbina.porudzbinaID, porudzbina.datumPorudzbine, porudzbina.razduzeno, porudzbina.napravljena, porudzbina.stoID, porudzbina.konobarID, konobar.ime, konobar.prezime, porudzbina.ukupnaVrednost', "konobar", "konobarID", "konobarID", null, null);
         $niz=array();
         while ($red=$db->getResult()->fetch_object()){
             $niz[] = $red;
@@ -170,7 +170,7 @@ class Porudzbina implements JsonSerializable {
     public static function vratiPorudzbinuPoKonobaru($konobarID){
         header ("Content-Type: application/json; charset=utf-8");
         $db = Flight::db();
-        $db->select("porudzbina", "porudzbinaID, datumPorudzbine, razduzeno, napravljena, konobarID, stoID, razduzenjeID", null, null, null, "konobarID = ".$konobarID, null);
+        $db->select("porudzbina", "porudzbinaID, datumPorudzbine, razduzeno, napravljena, konobarID, stoID, ukupnaVrednost", null, null, null, "konobarID = ".$konobarID, null);
         $niz=array();
         while ($red=$db->getResult()->fetch_object()){
             $niz[] = $red;
@@ -183,7 +183,7 @@ class Porudzbina implements JsonSerializable {
 	public static function vratiPorudzbinuPoDatumu($datumPorudzbine){
         header ("Content-Type: application/json; charset=utf-8");
         $db = Flight::db();
-        $db->select("porudzbina", "porudzbina.porudzbinaID, porudzbina.datumPorudzbine, porudzbina.razduzeno, porudzbina.napravljena, porudzbina.konobarID, porudzbina.stoID, porudzbina.razduzenjeID, konobar.ime, konobar.prezime", "konobar", "konobarID", "konobarID", "datumPorudzbine='". $datumPorudzbine ."'", null);
+        $db->select("porudzbina", "porudzbina.porudzbinaID, porudzbina.datumPorudzbine, porudzbina.razduzeno, porudzbina.napravljena, porudzbina.konobarID, porudzbina.stoID, porudzbina.ukupnaVrednost, konobar.ime, konobar.prezime", "konobar", "konobarID", "konobarID", "datumPorudzbine='". $datumPorudzbine ."'", null);
         $niz=array();
         while ($red=$db->getResult()->fetch_object()){
             $niz[] = $red;
@@ -196,7 +196,7 @@ class Porudzbina implements JsonSerializable {
 	public static function vratiPorudzbinePoslednjeNedelje(){
         header ("Content-Type: application/json; charset=utf-8");
         $db = Flight::db();
-        $db->select("porudzbina", "porudzbina.porudzbinaID, porudzbina.datumPorudzbine, porudzbina.razduzeno, porudzbina.napravljena, porudzbina.konobarID, porudzbina.stoID, porudzbina.razduzenjeID, konobar.ime, konobar.prezime", "konobar", "konobarID", "konobarID", "datumPorudzbine BETWEEN CURDATE() - INTERVAL 7 DAY AND CURDATE()", null);
+        $db->select("porudzbina", "porudzbina.porudzbinaID, porudzbina.datumPorudzbine, porudzbina.razduzeno, porudzbina.napravljena, porudzbina.konobarID, porudzbina.stoID, porudzbina.ukupnaVrednost, konobar.ime, konobar.prezime", "konobar", "konobarID", "konobarID", "datumPorudzbine BETWEEN CURDATE() - INTERVAL 7 DAY AND CURDATE()", null);
         $niz=array();
         while ($red=$db->getResult()->fetch_object()){
             $niz[] = $red;
@@ -209,7 +209,7 @@ class Porudzbina implements JsonSerializable {
 	public static function vratiPorudzbinePoslednjegMeseca(){
         header ("Content-Type: application/json; charset=utf-8");
         $db = Flight::db();
-        $db->select("porudzbina", "porudzbina.porudzbinaID, porudzbina.datumPorudzbine, porudzbina.razduzeno, porudzbina.napravljena, porudzbina.konobarID, porudzbina.stoID, porudzbina.razduzenjeID, konobar.ime, konobar.prezime", "konobar", "konobarID", "konobarID", "datumPorudzbine BETWEEN CURDATE() - INTERVAL 30 DAY AND CURDATE()", null);
+        $db->select("porudzbina", "porudzbina.porudzbinaID, porudzbina.datumPorudzbine, porudzbina.razduzeno, porudzbina.napravljena, porudzbina.konobarID, porudzbina.stoID, porudzbina.ukupnaVrednost, konobar.ime, konobar.prezime", "konobar", "konobarID", "konobarID", "datumPorudzbine BETWEEN CURDATE() - INTERVAL 30 DAY AND CURDATE()", null);
         $niz=array();
         while ($red=$db->getResult()->fetch_object()){
             $niz[] = $red;
@@ -222,7 +222,7 @@ class Porudzbina implements JsonSerializable {
 	public static function vratiPorudzbinePoslednjeGodine(){
         header ("Content-Type: application/json; charset=utf-8");
         $db = Flight::db();
-        $db->select("porudzbina", "porudzbina.porudzbinaID, porudzbina.datumPorudzbine, porudzbina.razduzeno, porudzbina.napravljena, porudzbina.konobarID, porudzbina.stoID, porudzbina.razduzenjeID, konobar.ime, konobar.prezime", "konobar", "konobarID", "konobarID", "datumPorudzbine BETWEEN CURDATE() - INTERVAL 365 DAY AND CURDATE()", null);
+        $db->select("porudzbina", "porudzbina.porudzbinaID, porudzbina.datumPorudzbine, porudzbina.razduzeno, porudzbina.napravljena, porudzbina.konobarID, porudzbina.stoID, porudzbina.ukupnaVrednost, konobar.ime, konobar.prezime", "konobar", "konobarID", "konobarID", "datumPorudzbine BETWEEN CURDATE() - INTERVAL 365 DAY AND CURDATE()", null);
         $niz=array();
         while ($red=$db->getResult()->fetch_object()){
             $niz[] = $red;
@@ -235,7 +235,7 @@ class Porudzbina implements JsonSerializable {
     public static function vratiNapravljenePorudzbine($napravljena){
         header ("Content-Type: application/json; charset=utf-8");
         $db = Flight::db();
-        $db->select("porudzbina", 'porudzbina.porudzbinaID, porudzbina.datumPorudzbine, porudzbina.razduzeno, porudzbina.napravljena, porudzbina.stoID, porudzbina.konobarID, konobar.ime, konobar.prezime, porudzbina.razduzenjeID', "konobar", "konobarID", "konobarID", "porudzbina.napravljena = ".$napravljena, null);
+        $db->select("porudzbina", 'porudzbina.porudzbinaID, porudzbina.datumPorudzbine, porudzbina.razduzeno, porudzbina.napravljena, porudzbina.stoID, porudzbina.konobarID, konobar.ime, konobar.prezime, porudzbina.ukupnaVrednost', "konobar", "konobarID", "konobarID", "porudzbina.napravljena = ".$napravljena, null);
         $niz=array();
         while ($red=$db->getResult()->fetch_object()){
             $niz[] = $red;
@@ -248,7 +248,7 @@ class Porudzbina implements JsonSerializable {
     public static function vratiRazduzenePorudzbine($razduzeno){
         header ("Content-Type: application/json; charset=utf-8");
         $db = Flight::db();
-        $db->select("porudzbina", 'porudzbina.porudzbinaID, porudzbina.datumPorudzbine, porudzbina.razduzeno, porudzbina.napravljena, porudzbina.stoID, porudzbina.konobarID, konobar.ime, konobar.prezime, porudzbina.razduzenjeID', "konobar", "konobarID", "konobarID", "porudzbina.razduzeno = ".$razduzeno, null);
+        $db->select("porudzbina", 'porudzbina.porudzbinaID, porudzbina.datumPorudzbine, porudzbina.razduzeno, porudzbina.napravljena, porudzbina.stoID, porudzbina.konobarID, konobar.ime, konobar.prezime, porudzbina.ukupnaVrednost', "konobar", "konobarID", "konobarID", "porudzbina.razduzeno = ".$razduzeno, null);
         $niz=array();
         while ($red=$db->getResult()->fetch_object()){
             $niz[] = $red;
@@ -281,7 +281,7 @@ class Porudzbina implements JsonSerializable {
             $json_odgovor = json_encode ($odgovor);
             echo $json_odgovor;
         } else {
-            if (!property_exists($podaci,'porudzbinaID')||!property_exists($podaci,'datumPorudzbine')||!property_exists($podaci,'razduzeno')||!property_exists($podaci,'napravljena')||!property_exists($podaci,'konobarID')||!property_exists($podaci,'stoID')||!property_exists($podaci,'razduzenjeID')){
+            if (!property_exists($podaci,'porudzbinaID')||!property_exists($podaci,'datumPorudzbine')||!property_exists($podaci,'razduzeno')||!property_exists($podaci,'napravljena')||!property_exists($podaci,'konobarID')||!property_exists($podaci,'stoID')||!property_exists($podaci,'ukupnaVrednost')){
                 $odgovor["poruka"] = "Niste prosledili korektne podatke";
                 $json_odgovor = json_encode ($odgovor,JSON_UNESCAPED_UNICODE);
                 echo $json_odgovor;
@@ -293,7 +293,7 @@ class Porudzbina implements JsonSerializable {
                     $v = "'".$v."'";
                     $podaci_query[$k] = $v;
                 }
-                if ($db->update("porudzbina", $porudzbinaID, array('datumPorudzbine', 'razduzeno', 'napravljena', 'konobarID', 'stoID', 'razduzenjeID'),array($podaci->datumPorudzbine, $podaci->razduzeno, $podaci->napravljena, $podaci->konobarID, $podaci->stoID, $podaci->razduzenjeID))){
+                if ($db->update("porudzbina", $porudzbinaID, array('datumPorudzbine', 'razduzeno', 'napravljena', 'konobarID', 'stoID', 'ukupnaVrednost'),array($podaci->datumPorudzbine, $podaci->razduzeno, $podaci->napravljena, $podaci->konobarID, $podaci->stoID, $podaci->ukupnaVrednost))){
                     $odgovor["poruka"] = "Porudžbina je uspešno izmenjena";
                     $json_odgovor = json_encode ($odgovor,JSON_UNESCAPED_UNICODE);
                     //echo $json_odgovor;
@@ -336,7 +336,7 @@ class Porudzbina implements JsonSerializable {
             echo $json_odgovor;
             return false;
         } else {
-            if (!property_exists($podaci,'datumPorudzbine')||!property_exists($podaci,'razduzeno')||!property_exists($podaci,'napravljena')||!property_exists($podaci,'konobarID')||!property_exists($podaci,'stoID')||!property_exists($podaci,'razduzenjeID')){
+            if (!property_exists($podaci,'datumPorudzbine')||!property_exists($podaci,'razduzeno')||!property_exists($podaci,'napravljena')||!property_exists($podaci,'konobarID')||!property_exists($podaci,'stoID')||!property_exists($podaci,'ukupnaVrednost')){
                 $odgovor["poruka"] = "Niste prosledili korektne podatke";
                 $json_odgovor = json_encode ($odgovor,JSON_UNESCAPED_UNICODE);
                 echo $json_odgovor;
@@ -348,7 +348,7 @@ class Porudzbina implements JsonSerializable {
                     $v = "'".$v."'";
                     $podaci_query[$k] = $v;
                 }
-                if ($db->insert("porudzbina", "datumPorudzbine, razduzeno, napravljena konobarID, stoID, razduzenjeID", array($podaci_query["datumPorudzbine"], $podaci_query["razduzeno"], $podaci_query["napravljena"], $podaci_query["konobarID"], $podaci_query["stoID"], $podaci_query["razduzenjeID"]))){
+                if ($db->insert("porudzbina", "datumPorudzbine, razduzeno, napravljena konobarID, stoID, ukupnaVrednost", array($podaci_query["datumPorudzbine"], $podaci_query["razduzeno"], $podaci_query["napravljena"], $podaci_query["konobarID"], $podaci_query["stoID"], $podaci_query["ukupnaVrednost"]))){
                     $odgovor["poruka"] = "Porudžbina je uspešno ubacena.";
                     $json_odgovor = json_encode ($odgovor,JSON_UNESCAPED_UNICODE);
                     //echo $json_odgovor;

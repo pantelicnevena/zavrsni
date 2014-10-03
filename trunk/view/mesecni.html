@@ -5,8 +5,10 @@
 	&nbsp;Kreiraj novu porudžbinu
 </button>
 
-<label style="position: absolute; right: 23%;">Pronađi porudžbinu: &nbsp;</label>
-<input ng-model="search.$" style="position: absolute; right: 8%;">
+<div class="pull-right">
+	<label >Pronađi porudžbinu: &nbsp;</label>
+	<input ng-model="search.$" class="form-control">
+</div>
 		
 <table id="searchObjResults" class='table table-striped'>
     <thead>
@@ -78,9 +80,9 @@
 			</label>
 		</td>
 		<td>
-			<label ng-click="orderByField = 'razduzenjeID'; reverseSort = !reverseSort">
-				<b>Razduženje</b>
-				<span ng-show="orderByField == 'razduzenjeID'">
+			<label ng-click="orderByField = 'ukupnaVrednost'; reverseSort = !reverseSort">
+				<b>Iznos</b>
+				<span ng-show="orderByField == 'ukupnaVrednost'">
 					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-down"></span>
 					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-up"></span>
 				</span>
@@ -94,7 +96,7 @@
         <td>{{mesecna.napravljena}}</td>
         <td>{{mesecna.ime}} {{mesecna.prezime}}</td>
         <td>{{mesecna.stoID}}</td>
-        <td>{{mesecna.razduzenjeID}}</td>
+        <td>{{mesecna.ukupnaVrednost}} din.</td>
     </tr>
 	
     </tbody>

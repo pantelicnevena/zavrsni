@@ -32,9 +32,9 @@ app.config(function($routeProvider) {
 });
 
 app.run(function($rootScope, $location, loginService){
-    var routespermission=['/welcome','/admin','/konobar','/', '/izvestaji', '/zaposleni','/artikli', '/porudzbine', '/distributeri',
-                            '/kategorije', '/stolovi', '/nerazduzeno', '/nenapravljena', '/izmena', '/sopstvene', '/dnevni',
-                            '/nedeljni', '/mesecni', '/godisnji'];  //route that require login
+    var routespermission=['/welcome','/admin','/konobar','/', '/izvestaji', '/zaposleni','/artikli', '/porudzbine', 					'/distributeri',
+                         '/kategorije', '/stolovi', '/nerazduzeno', '/nenapravljena', '/izmena', '/sopstvene', '/dnevni',
+                         '/nedeljni', '/mesecni', '/godisnji'];  //route that require login
     var adminroutes = ['/kategorije'];
     $rootScope.$on('$routeChangeStart', function(){
         if( routespermission.indexOf($location.path()) !=-1)
