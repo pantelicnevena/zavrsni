@@ -5,8 +5,10 @@
 
 <button class="btn btn-success" ng-click="izmeniKonobara('novi')" data-toggle="modal" href="#editModal">
     <i class="icon-calendar icon-white"></i>&nbsp;Kreiraj novog konobara</button>
-		<label style="position: absolute; right: 18%;">Pronađi zaposlenog: &nbsp;</label>
-		<input ng-model="search.$" style="position: absolute; right: 2%;">
+	<div class="pull-right">
+		<label>Pronađi zaposlenog: &nbsp;</label>
+		<input ng-model="search.$" class="form-control" >
+	</div>
 <div class="table-responsive">		
 
 <table id="searchObjResults" class='table table-striped'>
@@ -28,8 +30,8 @@
 			<label ng-click="orderByField = 'ime'; reverseSort = !reverseSort">
 				<b>Ime</b>
 				<span ng-show="orderByField == 'ime'">
-					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-up"></span>
-					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-down"></span>
+					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-down"></span>
+					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-up"></span>
 				</span>
 			</label>
 		</td>
@@ -37,8 +39,8 @@
 			<label ng-click="orderByField = 'prezime'; reverseSort = !reverseSort">
 				<b>Prezime</b>
 				<span ng-show="orderByField == 'prezime'">
-					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-up"></span>
-					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-down"></span>
+					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-down"></span>
+					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-up"></span>
 				</span>
 			</label>
 		</td>
@@ -55,8 +57,8 @@
 			<label ng-click="orderByField = 'mestoRodjenja'; reverseSort = !reverseSort">
 				<b>Mesto rođenja</b>
 				<span ng-show="orderByField == 'mestoRodjenja'">
-					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-up"></span>
-					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-down"></span>
+					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-down"></span>
+					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-up"></span>
 				</span>
 			</label>
 		</td>
@@ -64,8 +66,8 @@
 			<label ng-click="orderByField = 'korisnickoIme'; reverseSort = !reverseSort">
 				<b>Korisničko ime</b>
 				<span ng-show="orderByField == 'korisnickoIme'">
-					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-up"></span>
-					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-down"></span>
+					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-down"></span>
+					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-up"></span>
 				</span>
 			</label>
 		</td>
@@ -73,8 +75,8 @@
 			<label ng-click="orderByField = 'korisnickaSifra'; reverseSort = !reverseSort">
 				<b>Korisnička šifra</b>
 				<span ng-show="orderByField == 'korisnickaSifra'">
-					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-up"></span>
-					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-down"></span>
+					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-down"></span>
+					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-up"></span>
 				</span>
 			</label>
 		</td>

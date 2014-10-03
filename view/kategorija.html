@@ -1,8 +1,11 @@
 <h3 xmlns="http://www.w3.org/1999/html">Lista kategorija</h3>
 <button class="btn btn-success" ng-click="izmeniKategoriju('novi')" data-toggle="modal" href="#editModal">
     <i class="icon-calendar icon-white"></i>&nbsp;Kreiraj novu kategoriju</button>
-		<label style="position: absolute; right: 20%;">Pronađi kategoriju: &nbsp;</label>
-		<input ng-model="search.$" style="position: absolute; right: 8%;">
+		
+<div class="pull-right">
+	<label >Pronađi kategoriju: &nbsp;</label>
+	<input ng-model="search.$" class="form-control">
+</div>
 		
 <table id="searchObjResults" class='table table-striped'>
     <thead>
