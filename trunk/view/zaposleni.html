@@ -22,6 +22,7 @@
 		<th>&nbsp;</th>
 		<th>&nbsp;</th>
         <th>&nbsp;</th>
+		<th>&nbsp;</th>
     </tr>
     </thead>
     <tbody>
@@ -80,7 +81,7 @@
 				</span>
 			</label>
 		</td>
-		<td><b></b></td><td><b></b></td>
+		<td></td><td></td><td></td>
 	</tr>
     <tr ng-repeat='konobar in konobari | filter:search:strict | orderBy:orderByField:reverseSort'>
         <td>{{konobar.ime}}</td>
@@ -89,9 +90,14 @@
         <td>{{konobar.mestoRodjenja}}</td>
         <td>{{konobar.korisnickoIme}}</td>
         <td>{{konobar.korisnickaSifra}}</td>
-        <td><button role='button' class='btn btn-warning' ng-click="izmeniKonobara(konobar);" data-toggle="modal" href="#editModal">Izmeni</button></td>
-        <!--<td><input type="file" nv-file-select="" class='btn btn-info' uploader="uploader" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess"/></td>-->
-		<td><button role='button' class='btn btn-success' data-toggle="modal" href="#editModal2">Slika</button></td>
+        <td><button role='button' class='btn btn-success' ng-click="izmeniKonobara(konobar);" data-toggle="modal" href="#editModal"><span class="glyphicon glyphicon-edit"></span> &nbsp;Izmeni</button></td>
+		<td ng-controller="IzmenaListCtrl"><a href="#/izmena" ng-click="konobar;" class="btn btn-success">Izmena</a></td>
+		<td><button role='button' class="btn btn-danger" ng-click="delete(konobar)">
+				<span class="glyphicon glyphicon-trash"></span> &nbsp;Obriši
+			</button>
+		</td>
+        <!--<td><input type="file" nv-file-select="" class='btn btn-info' uploader="uploader" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess"/></td>
+		<td><button role='button' class='btn btn-success' data-toggle="modal" href="#editModal2">Slika</button></td>-->
 		
     </tr>
     </tbody>
