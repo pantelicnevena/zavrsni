@@ -1,112 +1,87 @@
-<h3 xmlns="http://www.w3.org/1999/html">Lista konobara</h3>
-<meta name="viewport" content="initial-scale=1">
-
+<h3 >Lista konobara</h3>
 
 
 <button class="btn btn-success" ng-click="izmeniKonobara('novi')" data-toggle="modal" href="#editModal">
-    <i class="icon-calendar icon-white"></i>&nbsp;Kreiraj novog konobara</button>
-	<div class="pull-right">
-		<label>Pronađi zaposlenog: &nbsp;</label>
-		<input ng-model="search.$" class="form-control" >
-	</div>
-<div class="table-responsive">		
+    <span class="glyphicon glyphicon-plus"></span>&nbsp;Kreiraj novog konobara
+</button>
 
-<table id="searchObjResults" class='table table-striped'>
-    <thead>
-    <tr>
-        <th>Konobar</th>
-        <th>&nbsp;</th>
-        <th>&nbsp;</th>
-        <th>&nbsp;</th>
-		<th>&nbsp;</th>
-		<th>&nbsp;</th>
-		<th>&nbsp;</th>
-        <th>&nbsp;</th>
-		<th>&nbsp;</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr style="height: 45px;">
-		<td>
-			<label ng-click="orderByField = 'ime'; reverseSort = !reverseSort">
-				<b>Ime</b>
+<div class="pull-right">
+    <div class="form-horizontal">
+        <div class="form-group">
+
+            <input ng-model="search.$" class="form-control" placeholder="Pronađi zaposlenog">
+
+
+
+            <label>Sortirano po imenu:
+                <label ng-click="orderByField = 'ime'; reverseSort = !reverseSort">
+
 				<span ng-show="orderByField == 'ime'">
-					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-down"></span>
-					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-up"></span>
+					<span ng-show="!reverseSort" ><span class="glyphicon glyphicon-chevron-down"></span> a-z</span>
+					<span ng-show="reverseSort"><span class="glyphicon glyphicon-chevron-up"></span> z-a</span>
 				</span>
-			</label>
-		</td>
-		<td>
-			<label ng-click="orderByField = 'prezime'; reverseSort = !reverseSort">
-				<b>Prezime</b>
-				<span ng-show="orderByField == 'prezime'">
-					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-down"></span>
-					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-up"></span>
-				</span>
-			</label>
-		</td>
-		<td>
-			<label ng-click="orderByField = 'godinaRodjenja'; reverseSort = !reverseSort">
-				<b>Godina rođenja</b>
-				<span ng-show="orderByField == 'godinaRodjenja'">
-					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-up"></span>
-					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-down"></span>
-				</span>
-			</label>
-		</td>
-		<td>
-			<label ng-click="orderByField = 'mestoRodjenja'; reverseSort = !reverseSort">
-				<b>Mesto rođenja</b>
-				<span ng-show="orderByField == 'mestoRodjenja'">
-					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-down"></span>
-					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-up"></span>
-				</span>
-			</label>
-		</td>
-		<td>
-			<label ng-click="orderByField = 'korisnickoIme'; reverseSort = !reverseSort">
-				<b>Korisničko ime</b>
-				<span ng-show="orderByField == 'korisnickoIme'">
-					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-down"></span>
-					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-up"></span>
-				</span>
-			</label>
-		</td>
-		<td>
-			<label ng-click="orderByField = 'korisnickaSifra'; reverseSort = !reverseSort">
-				<b>Korisnička šifra</b>
-				<span ng-show="orderByField == 'korisnickaSifra'">
-					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-down"></span>
-					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-up"></span>
-				</span>
-			</label>
-		</td>
-		<td></td><td></td><td></td>
-	</tr>
-    <tr ng-repeat='konobar in konobari | filter:search:strict | orderBy:orderByField:reverseSort'>
-        <td>{{konobar.ime}}</td>
-        <td>{{konobar.prezime}}</td>
-        <td>{{konobar.godinaRodjenja}}</td>
-        <td>{{konobar.mestoRodjenja}}</td>
-        <td>{{konobar.korisnickoIme}}</td>
-        <td>{{konobar.korisnickaSifra}}</td>
-        <td><button role='button' class='btn btn-success' ng-click="izmeniKonobara(konobar);" data-toggle="modal" href="#editModal"><span class="glyphicon glyphicon-edit"></span> &nbsp;Izmeni</button></td>
-		<td ng-controller="IzmenaListCtrl"><a href="#/izmena" ng-click="konobar;" class="btn btn-success">Izmena</a></td>
-		<td><button role='button' class="btn btn-danger" ng-click="delete(konobar)">
-				<span class="glyphicon glyphicon-trash"></span> &nbsp;Obriši
-			</button>
-		</td>
-        <!--<td><input type="file" nv-file-select="" class='btn btn-info' uploader="uploader" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess"/></td>
-		<td><button role='button' class='btn btn-success' data-toggle="modal" href="#editModal2">Slika</button></td>-->
-		
-    </tr>
-    </tbody>
-</table>
-<div class="paging"></div>
-
+                </label>
+            </label>
+        </div>
+    </div>
 </div>
 
-<div class="modal fade"  tabindex="-1" role="dialog" ng-include="'view/zaposleni-detalji.html'" id="editModal" aria-hidden="true"></div>
-<div class="modal fade"  tabindex="-1" role="dialog" ng-include="'view/upload.html'" id="editModal2" aria-hidden="true"></div>
+
+<div class="clearfix" style="margin-bottom: 16px"></div>
+
+<div class="row">
+    <div class="col-sm-6 col-md-4"
+         ng-repeat='konobar in konobari | filter:search:strict | orderBy:orderByField:reverseSort'>
+        <div class="thumbnail">
+            <img class="img-responsive" data-src="{{konobar.img}}" alt="{{konobar.img}} ...">
+            <div class="caption">
+                <h3>{{konobar.ime}} {{konobar.prezime}}</h3>
+                <p>Godina rodjenja: {{konobar.godinaRodjenja}}</p>
+                <p>Mesto rodjenja: {{konobar.mestoRodjenja}}</p>
+                <p>Korisnicko ime: {{konobar.korisnickoIme}}</p>
+
+                <div class="btn-group">
+                    <button role='button'
+                            class='btn btn-success'
+                            ng-click="izmeniKonobara(konobar);"
+                            data-toggle="modal"
+                            href="#editModal">
+                        <span class="glyphicon glyphicon-edit"></span>
+                        Izmeni
+                    </button>
+
+                    <button href="#/izmena" ng-controller="IzmenaListCtrl"
+                            ng-click="konobar;"
+                            class="btn btn-success">Izmena</button>
+
+                    <!--<span ng-controller="IzmenaListCtrl">
+                    <a href="#/izmena"
+                       ng-click="konobar;"
+                       class="btn btn-success">Izmena</a>
+                </span>-->
+                    <button role='button' class="btn btn-danger" ng-click="delete(konobar)">
+                        <span class="glyphicon glyphicon-trash"></span> &nbsp;Obriši
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
+<div
+        class="modal fade"
+        tabindex="-1"
+        role="dialog"
+        ng-include="'view/zaposleni-detalji.html'"
+        id="editModal"
+        aria-hidden="true">
+</div>
+<div class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     ng-include="'view/upload.html'"
+     id="editModal2"
+     aria-hidden="true">
+
+</div>
