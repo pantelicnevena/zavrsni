@@ -348,10 +348,11 @@ app.controller('ZaposleniListCtrl',function($scope, $location, KonobarService) {
      };
 
      $scope.delete = function(konobar) {
-         $scope.konobari.forEach(function(e, index) {
-             if (e.konobarID == $scope.konobar.konobarID) {
-                 $scope.konobar.$delete({id: $scope.konobar.konobarID}, function() {
-                     $scope.konobari.splice(index, 1);
+		$scope.konobar = konobar;
+		$scope.konobari.forEach(function(e, index) {
+			if (e.konobarID === $scope.konobar.konobarID) {
+				$scope.konobar.$delete({id: $scope.konobar.konobarID}, function() {
+                    $scope.konobari.splice(index, 1);
                  });
              }
          });
@@ -940,20 +941,39 @@ app.controller('NenapravljenaListCtrl',function($scope, $location, Nenapravljena
 });
 
 app.controller('IzmenaListCtrl',function($scope, $location, KonobarService) {
-    var $konobarID = sessionStorage.id;
+	
+	var $konobarID = sessionStorage.id;
 
     KonobarService.query({id: $konobarID}, function(konobari){
         $scope.konobari = konobari;
     });
 	
+	/*var $konobarID;
+	
+	if($scope.konobarID){
+		$konobarID = konobarID;
+	}else{
+		$konobarID = sessionStorage.id;
+		KonobarService.query({id: $konobarID}, function(konobari){
+			$scope.konobari = konobari;
+		});
+	}
     	
 	$scope.save = function(konobar){
 		konobar.$save({id: konobar.konobarID});
 		alert("Podaci su uspesno sacuvani.");
+	}*/
+	
+	$scope.izmeniKonobara = function(konobar){
+		if (konobar.konobarID) {
+			$scope.konobar = konobar;
+			var $konobarID = konobar.konobarID;
+			KonobarService.query({id: $konobarID}, function(konobari){
+			$scope.konobari = konobari;
+			});
+		}
+		return $scope.konobari;
 	}
-	
-	
-	
     
      $scope.delete = function(konobar) {
          $scope.konobari.forEach(function(e, index) {
