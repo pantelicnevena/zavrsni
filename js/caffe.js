@@ -341,12 +341,7 @@ app.controller('ZaposleniListCtrl',function($scope, $location, KonobarService) {
                     window.alert("Niste popunili sva polja.");
              }else{
                  noviKonobar.$save(function(){
-                     $scope.konobari.push(noviKonobar);
-                     $scope.$apply(function(){
-                         KonobarService.query(function(konobari){
-                             $scope.konobari = konobari;
-                         });
-                     });
+                     $scope.konobari.push(noviKonobar)
                  });
              }
 
@@ -456,7 +451,7 @@ app.controller('ArtikalListCtrl',function($scope, $location, ArtikalService, Kat
     $scope.reverseSort = false;
 });
 
-app.controller('PorudzbinaListCtrl',function($scope, $location, PorudzbinaService, KonobarService, StoService, StavkaService, ArtikalService) {
+app.controller('PorudzbinaListCtrl',function($http, $scope, $location, PorudzbinaService, KonobarService, StoService, StavkaService, ArtikalService) {
 
     PorudzbinaService.query(function(porudzbine){
         $scope.porudzbine = porudzbine;
@@ -518,15 +513,18 @@ app.controller('PorudzbinaListCtrl',function($scope, $location, PorudzbinaServic
         var datum = yyyy+'-'+mm+'-'+dd;
         var $konobarID = sessionStorage.id;
         var novaPorudzbina = new PorudzbinaService($scope.porudzbina);
+        novaPorudzbina.datumPorudzbine = datum;
+        novaPorudzbina.konobarID = $konobarID;
+
         console.log(novaPorudzbina);
-        if(novaPorudzbina.stoID){
-            novaPorudzbina.datumPorudzbine = datum;
-            novaPorudzbina.konobarID = $konobarID;
+        var $promise = $http.post('php/porudzbinaID.php',novaPorudzbina);
+        if ($promise) console.log($promise);
+        /*if(novaPorudzbina.stoID){
             novaPorudzbina.$save(function(){
                $scope.porudzbine.push(novaPorudzbina);
             });
             $scope.porudzbina.msg = "Porudzbina je uspesno sacuvana.";
-        }
+        }*/
     }
 
     $scope.dodaj = function(){
