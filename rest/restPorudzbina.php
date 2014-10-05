@@ -45,17 +45,17 @@ Flight::route('GET /porudzbina/razduzeno/@razduzeno', function($razduzeno){
 });
 
 Flight::route('POST /porudzbina', function(){
-    $porudzbina = new Porudzbina("porudzbinaID", "datumPorudzbine", "razduzeno", "napravljena", "konobarID", "stoID", "ukupnaVrednost");
+    $porudzbina = new Porudzbina("porudzbinaID", "datumPorudzbine", "razduzeno", "napravljena", "konobarID", "stoID");
     $porudzbina->unesiPorudzbinu();
 });
 
 Flight::route('POST /porudzbina/@porudzbinaID', function($porudzbinaID){
-    $porudzbina = new Porudzbina("porudzbinaID", "datumPorudzbine", "razduzeno", "napravljena", "konobarID", "stoID", "ukupnaVrednost");
+    $porudzbina = new Porudzbina("porudzbinaID", "datumPorudzbine", "razduzeno", "napravljena", "konobarID", "stoID");
     $porudzbina->izmeniPorudzbinu($porudzbinaID);
 });
 
 Flight::route('DELETE /porudzbina/@porudzbinaID', function($porudzbinaID){
-    $porudzbina = new Porudzbina("porudzbinaID", "datumPorudzbine", "razduzeno", "napravljena", "konobarID", "stoID", "ukupnaVrednost");
+    $porudzbina = new Porudzbina("porudzbinaID", "datumPorudzbine", "razduzeno", "napravljena", "konobarID", "stoID");
     $porudzbina->obrisiPorudzbinu($porudzbinaID);
 });
 

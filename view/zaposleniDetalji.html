@@ -1,0 +1,46 @@
+
+<div class="col-md-4 col-md-offset-4">
+    <h3>Promeni podatke</h3>
+    <br/>
+    <div ng-repeat='konobar in konobari'>
+        <form ng-submit="login()">
+            <div class="input-group">
+                <span class="input-group-addon"><span class='glyphicon glyphicon-pencil'></span></span>
+                <input type='text' class='form-control' ng-model='konobar.konobarID' placeholder='ID konobara' readonly/>
+            </div>
+            <br/>
+            <div class="input-group">
+                <span class="input-group-addon"><span class='glyphicon glyphicon-user'></span></span>
+                <input type='text' class='form-control' ng-model='konobar.ime' placeholder='Ime'/>
+            </div>
+            <br/>
+            <div class="input-group">
+                <span class="input-group-addon"><span class='glyphicon glyphicon-user'></span></span>
+                <input type='text' class='form-control' ng-model='konobar.prezime' placeholder='Prezime'/>
+            </div>
+            <br/>
+            <div class="input-group">
+                <span class="input-group-addon"><span class='glyphicon glyphicon-calendar'></span></span>
+                <input type='text' class='form-control' ng-model='konobar.godinaRodjenja' placeholder='Godina rođenja'/>
+            </div>
+            <br/>
+            <div class="input-group">
+                <span class="input-group-addon"><span class='glyphicon glyphicon-globe'></span></span>
+                <input type='text' class='form-control' ng-model='konobar.mestoRodjenja' placeholder='Mesto rođenja'/>
+            </div>
+            <br/>
+            <div class="input-group">
+                <span class="input-group-addon">@</span>
+                <input type='text' class='form-control' ng-model='konobar.korisnickoIme' placeholder='Korisničko ime'/>
+            </div>
+            <br/>
+            <div class="input-group">
+                <span class="input-group-addon"><span class='glyphicon glyphicon-lock'></span></span>
+                <input type='password' class='form-control' ng-model='konobar.korisnickaSifra' placeholder='Korisnička šifra'/>
+            </div>
+            <br/>
+            <button type="button" class="btn btn-info btn-block" data-dismiss="modal" ng-click="save(konobar)">Sačuvaj izmene</button>
+        </form>
+
+    </div>
+</div>

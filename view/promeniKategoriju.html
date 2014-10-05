@@ -1,0 +1,22 @@
+
+<div class="col-md-4 col-md-offset-4">
+    <h3>Promeni podatke o kategoriji</h3>
+    <br/>
+    <div ng-repeat='kategorija in kategorije'>
+        <form ng-submit="login()">
+            <div class="input-group">
+                <span class="input-group-addon"><span class='glyphicon glyphicon-lock'></span></span>
+                <input type='text' class='form-control' ng-model='kategorija.kategorijaID' placeholder='ID kategorije' readonly/>
+            </div>
+            <br/>
+            <div class="input-group">
+                <span class="input-group-addon"><span class='glyphicon glyphicon-pencil'></span></span>
+                <input type='text' class='form-control' ng-model='kategorija.nazivKategorije' placeholder='Kategorija'/>
+            </div>
+            <br/>
+
+            <button type="button" class="btn btn-info btn-block" data-dismiss="modal" ng-click="save(kategorija)">Sačuvaj izmene</button>
+        </form>
+
+    </div>
+</div>

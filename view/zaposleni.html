@@ -33,7 +33,7 @@
     <div class="col-sm-6 col-md-4"
          ng-repeat='konobar in konobari | filter:search:strict | orderBy:orderByField:reverseSort'>
         <div class="thumbnail">
-            <img class="img-responsive" data-src="{{konobar.img}}" alt="{{konobar.img}} ...">
+            <img style="height:180px;" class="img-responsive" src="img/{{konobar.slika}}" alt="{{konobar.slika}} ...">
             <div class="caption">
                 <h3>{{konobar.ime}} {{konobar.prezime}}</h3>
                 <p>Godina rodjenja: {{konobar.godinaRodjenja}}</p>
@@ -83,5 +83,4 @@
      ng-include="'view/upload.html'"
      id="editModal2"
      aria-hidden="true">
-
 </div>
