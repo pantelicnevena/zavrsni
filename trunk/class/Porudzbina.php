@@ -219,7 +219,7 @@ class Porudzbina implements JsonSerializable {
     public static function vratiNapravljenePorudzbine($napravljena){
         header ("Content-Type: application/json; charset=utf-8");
         $db = Flight::db();
-        $db->select("porudzbina", 'porudzbina.porudzbinaID, porudzbina.datumPorudzbine, porudzbina.razduzeno, porudzbina.napravljena, porudzbina.stoID, porudzbina.konobarID, konobar.ime, konobar.prezime', "konobar", "konobarID", "konobarID", "porudzbina.napravljena = ".$napravljena, null);
+        $db->nenapravljena("select porudzbina.porudzbinaID, porudzbina.napravljena, porudzbina.stoID, stavka.kolicina, artikal.nazivArtikla from porudzbina inner join stavka on stavka.porudzbinaID = porudzbina.porudzbinaID inner join artikal on artikal.artikalID = stavka.artikalID where porudzbina.napravljena = ". $napravljena);
         $niz=array();
         while ($red=$db->getResult()->fetch_object()){
             $niz[] = $red;
