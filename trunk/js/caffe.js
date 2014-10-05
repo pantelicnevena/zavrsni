@@ -329,7 +329,7 @@ app.controller('ZaposleniListCtrl',function($scope, $location, KonobarService) {
     $scope.save = function(konobar) {
          if (!$scope.konobar.konobarID) {
              var noviKonobar = new KonobarService($scope.konobar);
-             if (noviKonobar.slika === "") noviKonobar.slika = "img/default.jpg";
+             if (noviKonobar.slika === "") noviKonobar.slika = "default.jpg";
              if (noviKonobar.ime === ""
                  || noviKonobar.prezime===""
                  || noviKonobar.godinaRodjenja===""
@@ -342,6 +342,11 @@ app.controller('ZaposleniListCtrl',function($scope, $location, KonobarService) {
              }else{
                  noviKonobar.$save(function(){
                      $scope.konobari.push(noviKonobar);
+                     $scope.$apply(function(){
+                         KonobarService.query(function(konobari){
+                             $scope.konobari = konobari;
+                         });
+                     });
                  });
              }
 
@@ -452,12 +457,11 @@ app.controller('ArtikalListCtrl',function($scope, $location, ArtikalService, Kat
 });
 
 app.controller('PorudzbinaListCtrl',function($scope, $location, PorudzbinaService, KonobarService, StoService, StavkaService, ArtikalService) {
-    $scope.testValue = 0;
+
     PorudzbinaService.query(function(porudzbine){
         $scope.porudzbine = porudzbine;
-        $scope.testValue++;
-    }, 500);
 
+    });
 
 	StavkaService.query(function(stavke){
 		$scope.stavke = stavke;
@@ -466,34 +470,6 @@ app.controller('PorudzbinaListCtrl',function($scope, $location, PorudzbinaServic
 	ArtikalService.query(function(artikli){
 		$scope.artikli = artikli;
 	});
-	
-	$scope.nerazduzeno = function(){
-		var broj = 0;
-		for (var i=0; i < $scope.porudzbine.length; i++){
-			var porudzbina = $scope.porudzbine[i];
-			if (porudzbina.razduzeno === "0") broj = broj + 1;
-		}
-		return broj;
-	}
-	
-	$scope.total = function(){
-		return $scope.konobari.length;
-	}
-
-
-    $scope.razduzi = function(porudzbina){
-        var novaPorudzbina = porudzbina;
-        novaPorudzbina.razduzeno = '1';
-        console.log(novaPorudzbina);
-        novaPorudzbina.$save();
-    };
-
-	/*PorudzbinaService.query({id: 5533}, function(porudzbine){
-		$scope.porudzbine = porudzbine;
-	});*/
-	
-	//http://stackoverflow.com/questions/14523679/can-you-pass-parameters-to-an-angularjs-controller-on-creation
-	//http://fdietz.github.io/recipes-with-angular-js/consuming-external-services/consuming-restful-apis.html
 
     KonobarService.query(function(konobari){
         $scope.konobari = konobari;
@@ -519,6 +495,7 @@ app.controller('PorudzbinaListCtrl',function($scope, $location, PorudzbinaServic
             $scope.porudzbina = {
                 datumPorudzbine: datum,
                 razduzeno: "",
+                napravljena: "",
                 konobarID: "",
                 stoID: "",
                 razduzenjeID: ""
@@ -539,13 +516,17 @@ app.controller('PorudzbinaListCtrl',function($scope, $location, PorudzbinaServic
         }else { var mm = n.getMonth()+1}
         var dd = n.getDate();
         var datum = yyyy+'-'+mm+'-'+dd;
-
+        var $konobarID = sessionStorage.id;
         var novaPorudzbina = new PorudzbinaService($scope.porudzbina);
-        novaPorudzbina.datumPorudzbine = datum;
-        novaPorudzbina.$save(function(){
-           $scope.porudzbine.push(novaPorudzbina);
-        });
-
+        console.log(novaPorudzbina);
+        if(novaPorudzbina.stoID){
+            novaPorudzbina.datumPorudzbine = datum;
+            novaPorudzbina.konobarID = $konobarID;
+            novaPorudzbina.$save(function(){
+               $scope.porudzbine.push(novaPorudzbina);
+            });
+            $scope.porudzbina.msg = "Porudzbina je uspesno sacuvana.";
+        }
     }
 
     $scope.dodaj = function(){

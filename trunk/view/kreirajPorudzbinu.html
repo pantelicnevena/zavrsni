@@ -1,7 +1,7 @@
 
 <div>
-    <h4 class="title">Porudžbina</h4>
-</div>
+    <h3 class="title">Porudžbina</h3>
+</div><br/>
 <div >
     <form>
         <table style="width: 70%">
@@ -11,13 +11,13 @@
             </tr>
             <tr>
                 <td>
-                    <select style="width: 80%" ng-init="porudzbina.razduzeno=0" ng-model="porudzbina.razduzeno">
+                    <select style="width: 80%" ng-init="porudzbina.razduzeno=0" ng-model="porudzbina.razduzeno" required>
                         <option selected="selected" value="0">NE</option>
                         <option value="1">DA</option>
                     </select><br/>
                 </td>
                 <td>
-                    <select style="width: 60%" ng-init="porudzbina.napravljena=0" ng-model="porudzbina.napravljena">
+                    <select style="width: 60%" ng-init="porudzbina.napravljena=0" ng-model="porudzbina.napravljena" required>
                         <option value="0">NE</option>
                         <option value="1">DA</option>
                     </select><br/>
@@ -25,19 +25,15 @@
             </tr>
             <tr>
                 <th>Sto</th>
-                <th>Konobar</th>
+                <th></th>
             </tr>
             <tr>
                 <td>
-                    <select style="width: 80%" ng-model="porudzbina.stoID" ng-options="sto.stoID as sto.brojStola for sto in stolovi">
+                    <select style="width: 80%" ng-model="porudzbina.stoID" ng-options="sto.stoID as sto.brojStola for sto in stolovi" required>
                         <option></option>
                     </select>
                 </td>
-                <td>
-                    <select style="width: 60%" ng-model="porudzbina.konobarID" ng-options="konobar.konobarID as konobar.ime+' '+konobar.prezime for konobar in konobari | orderBy:'ime'">
-                        <option></option>
-                    </select><br/>
-                </td>
+                <td style="width: 60%;"><div class="label label-success" ng-if="porudzbina.msg">{{porudzbina.msg}}</div></td>
             </tr>
         </table>
 
@@ -105,7 +101,7 @@
         <table id="mytable">
             <thead><th>Artikal</th><th>Kolicina</th><th></th></thead>
             <tbody>
-            <tr ng-model="stavke" style="margin: 5px;">
+            <tr style="margin: 5px;">
                 <td style="margin: 10px;">
                     <select name="artikal" id="artikal" style="height: 25px;" ng-model="stavka.artikalID" ng-options="artikal.artikalID as artikal.nazivArtikla for artikal in artikli">
                         <option></option>
@@ -124,5 +120,5 @@
 </div>
 <div class="footer">
     <button type="button" class="btn btn-danger" onclick="window.location='#/konobar'">Poništi unos</button>
-    <button type="button" class="btn btn-primary" ng-click="dodaj(stavke)">Sačuvaj izmene</button>
+    <button type="button" class="btn btn-primary" ng-click="dodaj(stavka)">Sačuvaj izmene</button>
 </div>

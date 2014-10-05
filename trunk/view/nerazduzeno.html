@@ -81,13 +81,10 @@
         <td>{{porudzbina.napravljena}}</td>
         <td>{{porudzbina.ime}} {{porudzbina.prezime}}</td>
         <td>{{porudzbina.stoID}}</td>
-        <td><button role='button' class='btn btn-success' ng-click="izmeniPorudzbinu(porudzbina);" data-toggle="modal" href="#editModal">
-            <span class="glyphicon glyphicon-edit"></span>&nbsp;Izmeni </button>
-        </td>
-        <td ng-controller="PorudzbinaListCtrl">
-            <button role='button' class='btn btn-danger' ng-click="razduzi(porudzbina);" >
+        <td><div ng-controller="PorudzbinaListCtrl">
+            <button role='button' class='btn btn-danger' ng-click="porudzbina.razduzeno = 1; razduzi(porudzbina);" >
                 <span class="glyphicon glyphicon-usd"></span>&nbsp;Razduži
-            </button>
+            </button></div>
         </td>
     </tr>
     </tbody>
