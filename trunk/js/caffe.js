@@ -11,9 +11,12 @@ app.config(function($routeProvider) {
 		.when('/izvestaji', {templateUrl: 'view/izvestaji.html'})
         .when('/zaposleni', {templateUrl: 'view/zaposleni.html', controller: 'ZaposleniListCtrl'})
         .when('/artikli', {templateUrl: 'view/artikal.html', controller: 'ArtikalListCtrl'})
+        .when('/promeniArtikal', {templateUrl: 'view/promeniArtikal.html', controller: 'ArtikalListCtrl'})
         .when('/porudzbine', {templateUrl: 'view/porudzbina.html', controller: 'PorudzbinaListCtrl'})
         .when('/distributeri', {templateUrl: 'view/distributer.html', controller: 'DistributerListCtrl'})
+        .when('/promeniDistributera', {templateUrl: 'view/promeniDistributera.html', controller: 'DistributerListCtrl'})
         .when('/kategorije', {templateUrl: 'view/kategorija.html', controller: 'KategorijaListCtrl'})
+        .when('/promeniKategoriju', {templateUrl: 'view/promeniKategoriju.html', controller: 'KategorijaListCtrl'})
         .when('/stolovi', {templateUrl: 'view/sto.html', controller: 'StoListCtrl'})
         .when('/nerazduzeno', {templateUrl: 'view/nerazduzeno.html', controller: 'NerazduzenoListCtrl'})
         .when('/nenapravljena', {templateUrl: 'view/nenapravljena.html', controller: 'NenapravljenaListCtrl'})
@@ -24,6 +27,7 @@ app.config(function($routeProvider) {
 		.when('/nedeljni', {templateUrl: 'view/nedeljni.html', controller: 'IzvestajListCtrl'})
 		.when('/mesecni', {templateUrl: 'view/mesecni.html', controller: 'IzvestajListCtrl'})
 		.when('/godisnji', {templateUrl: 'view/godisnji.html', controller: 'IzvestajListCtrl'})
+        .when('/poruci', {templateUrl: 'view/kreirajPorudzbinu.html', controller: 'PorudzbinaListCtrl'})
         // AngularJS does not allow template-less controllers, so we are specifying a
         // template that we know we won't use. Here is more info on this
         // https://github.com/angular/angular.js/issues/1838
@@ -59,6 +63,7 @@ app.run(function($rootScope, $location, loginService){
         }
     });
 });
+
 
 /*
  app.config(function($httpProvider) {
@@ -118,6 +123,10 @@ app.factory('KategorijaService', function($resource) {
 
 app.factory('StoService', function($resource) {
     return $resource('/zavrsni/rest/sto/:id');
+});
+
+app.factory('StavkaService', function($resource) {
+    return $resource('/zavrsni/rest/stavka/:id');   //zavrsni/rest/stavka/@porudzbinaID
 });
 
 app.factory('NerazduzenoService', function($resource) {
@@ -294,12 +303,10 @@ app.controller('ZaposleniListCtrl',function($scope, $location, KonobarService) {
     KonobarService.query(function(konobari){
         $scope.konobari = konobari;
     });
-	
-	KonobarService.query(function(konobari){
-        $scope.konobari = konobari;
-    });
+
 
     $scope.izmeniKonobara = function (konobar) {
+        console.log(konobar);
         if(konobar === 'novi'){
             $scope.noviKonobar = true;
             $scope.konobar = {
@@ -322,7 +329,7 @@ app.controller('ZaposleniListCtrl',function($scope, $location, KonobarService) {
     $scope.save = function(konobar) {
          if (!$scope.konobar.konobarID) {
              var noviKonobar = new KonobarService($scope.konobar);
-             if (noviKonobar.slika === "") noviKonobar.slika = "default";
+             if (noviKonobar.slika === "") noviKonobar.slika = "img/default.jpg";
              if (noviKonobar.ime === ""
                  || noviKonobar.prezime===""
                  || noviKonobar.godinaRodjenja===""
@@ -424,6 +431,12 @@ app.controller('ArtikalListCtrl',function($scope, $location, ArtikalService, Kat
         }
     };
 
+    $scope.sacuvaj = function(artikal){
+        console.log(artikal);
+        artikal.$save({id: artikal.artikalID});
+        alert("Podaci su uspesno sacuvani.");
+    }
+
     $scope.delete = function(artikal) {
         $scope.artikli.forEach(function(e, index) {
             if (e.artikalID === $scope.artikal.artikalID) {
@@ -438,18 +451,20 @@ app.controller('ArtikalListCtrl',function($scope, $location, ArtikalService, Kat
     $scope.reverseSort = false;
 });
 
-app.controller('PorudzbinaListCtrl',function($scope, $location, PorudzbinaService, KonobarService, StoService, StavkaService, RazduzenjeService) {
-
+app.controller('PorudzbinaListCtrl',function($scope, $location, PorudzbinaService, KonobarService, StoService, StavkaService, ArtikalService) {
+    $scope.testValue = 0;
     PorudzbinaService.query(function(porudzbine){
         $scope.porudzbine = porudzbine;
-    });
-		
+        $scope.testValue++;
+    }, 500);
+
+
 	StavkaService.query(function(stavke){
 		$scope.stavke = stavke;
 	});
 	
-	RazduzenjeService.query(function(razduzenja){
-		$scope.razduzenja = razduzenja;
+	ArtikalService.query(function(artikli){
+		$scope.artikli = artikli;
 	});
 	
 	$scope.nerazduzeno = function(){
@@ -464,7 +479,15 @@ app.controller('PorudzbinaListCtrl',function($scope, $location, PorudzbinaServic
 	$scope.total = function(){
 		return $scope.konobari.length;
 	}
-	
+
+
+    $scope.razduzi = function(porudzbina){
+        var novaPorudzbina = porudzbina;
+        novaPorudzbina.razduzeno = '1';
+        console.log(novaPorudzbina);
+        novaPorudzbina.$save();
+    };
+
 	/*PorudzbinaService.query({id: 5533}, function(porudzbine){
 		$scope.porudzbine = porudzbine;
 	});*/
@@ -507,9 +530,56 @@ app.controller('PorudzbinaListCtrl',function($scope, $location, PorudzbinaServic
         }
     }
 
+    $scope.poruci = function() {
+        var n = new Date();
+        var yyyy = n.getFullYear();
+        if (n.getMonth()+1 < 10){
+            var m = n.getMonth()+1;
+            var mm = "0"+m;
+        }else { var mm = n.getMonth()+1}
+        var dd = n.getDate();
+        var datum = yyyy+'-'+mm+'-'+dd;
+
+        var novaPorudzbina = new PorudzbinaService($scope.porudzbina);
+        novaPorudzbina.datumPorudzbine = datum;
+        novaPorudzbina.$save(function(){
+           $scope.porudzbine.push(novaPorudzbina);
+        });
+
+    }
+
+    $scope.dodaj = function(){
+        console.log("stavke: "+$scope.stavke.length);
+        var novaStavka = new StavkaService($scope.stavka);
+        novaStavka.porudzbinaID = "5540";
+        console.log(novaStavka);
+        novaStavka.$save(function(){
+            $scope.stavke.push(novaStavka);
+            alert("sacuvana stavka");
+        });
+    }
+
+    $scope.razduzi = function() {
+        if ($scope.porudzbina) console.log($scope.porudzbina);
+        if (!$scope.porudzbina.porudzbinaID) {
+            var novaPorudzbina = new PorudzbinaService($scope.porudzbina);
+            novaPorudzbina.$save(function(){
+                $scope.porudzbine.push(novaPorudzbina);
+            });
+        } else {
+            $scope.porudzbine.forEach(function(e) {
+                if (e.porudzbinaID === $scope.porudzbina.porudzbinaID) {
+                    e.razduzeno = "1";
+                    console.log(e);
+                    e.$save({id: e.porudzbinaID});
+                }
+            });
+        }
+    };
 
      $scope.save = function() {
-        if (!$scope.porudzbina.porudzbinaID) {
+         if ($scope.porudzbina) console.log($scope.porudzbina);
+         if (!$scope.porudzbina.porudzbinaID) {
             var novaPorudzbina = new PorudzbinaService($scope.porudzbina);
             novaPorudzbina.$save(function(){
                 $scope.porudzbine.push(novaPorudzbina);
@@ -578,6 +648,12 @@ app.controller('DistributerListCtrl',function($scope, $location, DistributerServ
         }
     };
 
+    $scope.sacuvaj = function(distributer){
+        console.log(distributer);
+        distributer.$save({id: distributer.distributerID});
+        alert("Podaci su uspesno sacuvani.");
+    }
+
     $scope.orderByField = 'nazivDistributera';
     $scope.reverseSort = false;
 
@@ -598,8 +674,11 @@ app.controller('KategorijaListCtrl',function($scope, $location, KategorijaServic
 
     KategorijaService.query(function(kategorije){
         $scope.kategorije = kategorije;
-
     });
+
+    /*KategorijaService.query({id: 1}, function(kategorije){
+     $scope.kategorije = kategorije;
+     });*/
 
     $scope.izmeniKategoriju = function (kategorija) {
 
@@ -645,6 +724,81 @@ app.controller('KategorijaListCtrl',function($scope, $location, KategorijaServic
     };
 
     $scope.orderByField = 'nazivKategorije';
+    $scope.reverseSort = false;
+
+});
+
+app.controller('StavkaListCtrl',function($scope, $location, StavkaService, ArtikalService, PorudzbinaService) {
+
+    StavkaService.query(function(stavke){
+        $scope.stavke = stavke;
+    });
+
+    ArtikalService.query(function(artikli){
+        $scope.artikli = artikli;
+    });
+
+    PorudzbinaService.query(function(porudzbine){
+        $scope.porudzbine = porudzbine;
+    });
+
+    $scope.izmeniStavku = function (stavka) {
+
+        if(stavka === 'novi'){
+            $scope.novaStavka = true;
+            $scope.stavka = {
+                koilicina: "",
+                porudzbinaID: "",
+                artikalID: ""
+            };
+        }
+        else {
+            $scope.novaStavka = false;
+            $scope.stavka = stavka;
+        }
+    }
+
+    $scope.dodaj = function(){
+        var novaStavka = new StavkaService($scope.stavka);
+        novaStavka.porudzbinaID = "5540";
+        console.log(novaStavka);
+        novaStavka.$save(function(){
+            $scope.stavke.push(novaStavka);
+            alert("sacuvana stavka");
+
+        });
+    }
+
+    $scope.save = function() {
+        if (!$scope.stavka.redniBrojStavke) {
+            var novaStavka = new StavkaService($scope.stavka);
+            if (novaStavka.kolicina === "" || novaStavka.porudzbinaID === "" || novaStavka.artikalID === ""){
+                window.alert("Niste popunili sva polja.");
+            }else{
+                novaStavka.$save(function(){
+                    $scope.stavke.push(novaStavka);
+                });
+            }
+        } else {
+            $scope.stavke.forEach(function(e) {
+                if (e.redniBrojStavke === $scope.stavka.redniBrojStavke) {
+                    e.$save({id: e.rednibrojStavke});
+                }
+            });
+        }
+    };
+
+    $scope.delete = function(stavka) {
+        $scope.stavke.forEach(function(e, index) {
+            if (e.redniBrojStavke == $scope.stavka.redniBrojStavke) {
+                $scope.stavka.$delete({id: $scope.stavka.redniBrojStavke}, function() {
+                    $scope.stavke.splice(index, 1);
+                });
+            }
+        });
+    };
+
+    $scope.orderByField = 'porudzbinaID';
     $scope.reverseSort = false;
 
 });
@@ -747,14 +901,14 @@ app.controller('NerazduzenoListCtrl',function($scope, $location, NerazduzenoServ
 
 
     $scope.save = function() {
-        if (!$scope.porudzbina._id) {
-            var novaPorudzbina = new PorudzbinaService($scope.porudzbina);
+        if (!$scope.porudzbina.porudzbinaID) {
+            var novaPorudzbina = new NerazduzenoService($scope.porudzbina);
             novaPorudzbina.$save(function(){
                 $scope.porudzbine.push(novaPorudzbina);
             });
         } else {
             $scope.porudzbine.forEach(function(e) {
-                if (e._id === $scope.porudzbina._id) {
+                if (e.porudzbinaID === $scope.porudzbina.porudzbinaID) {
                     e.$save();
                 }
             });
@@ -941,9 +1095,8 @@ app.controller('NenapravljenaListCtrl',function($scope, $location, Nenapravljena
 });
 
 app.controller('IzmenaListCtrl',function($scope, $location, KonobarService) {
-	
-	var $konobarID = sessionStorage.id;
 
+	var $konobarID = sessionStorage.id;
     KonobarService.query({id: $konobarID}, function(konobari){
         $scope.konobari = konobari;
     });
@@ -957,12 +1110,12 @@ app.controller('IzmenaListCtrl',function($scope, $location, KonobarService) {
 		KonobarService.query({id: $konobarID}, function(konobari){
 			$scope.konobari = konobari;
 		});
-	}
+	}*/
     	
 	$scope.save = function(konobar){
 		konobar.$save({id: konobar.konobarID});
 		alert("Podaci su uspesno sacuvani.");
-	}*/
+	}
 	
 	$scope.izmeniKonobara = function(konobar){
 		if (konobar.konobarID) {

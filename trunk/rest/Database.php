@@ -42,7 +42,8 @@ class Database {
         if($where != null)
 			$q .= ' WHERE '.$where;  
 		if($order != null)  
-			$q .= ' ORDER BY '.$order; 					
+			$q .= ' ORDER BY '.$order;
+        //print_r($q);
 		$this->ExecuteQuery($q);
 		//print_r($this->getResult()->fetch_object());
 	}

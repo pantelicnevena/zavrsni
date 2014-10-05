@@ -20,7 +20,6 @@
         <th>&nbsp;</th>
         <th>&nbsp;</th>
         <th>&nbsp;</th>
-        <th>&nbsp;</th>
     </tr>
     </thead>
     <tbody>
@@ -79,15 +78,6 @@
 				</span>
 			</label>
 		</td>
-		<td>
-			<label ng-click="orderByField = 'ukupnaVrednost'; reverseSort = !reverseSort">
-				<b>Iznos</b>
-				<span ng-show="orderByField == 'ukupnaVrednost'">
-					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-down"></span>
-					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-up"></span>
-				</span>
-			</label>
-		</td>
 	</tr>
     <tr ng-repeat='godina in godine | filter:search:strict | orderBy:orderByField:reverseSort'>
         <td>{{godina.porudzbinaID}}</td>
@@ -96,7 +86,6 @@
         <td>{{godina.napravljena}}</td>
         <td>{{godina.ime}} {{godina.prezime}}</td>
         <td>{{godina.stoID}}</td>
-        <td>{{godina.ukupnaVrednost}} din.</td>
     </tr>
 	
     </tbody>

@@ -15,7 +15,6 @@
         <th>&nbsp;</th>
         <th>&nbsp;</th>
         <th>&nbsp;</th>
-        <th>&nbsp;</th>
     </tr>
     </thead>
     <tbody>
@@ -74,15 +73,6 @@
 				</span>
 			</label>
 		</td>
-		<td>
-			<label ng-click="orderByField = 'razduzenjeID'; reverseSort = !reverseSort">
-				<b>Razduženje</b>
-				<span ng-show="orderByField == 'razduzenjeID'">
-					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-down"></span>
-					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-up"></span>
-				</span>
-			</label>
-		</td>
 		<td><b></b></td>
 	</tr>
     <tr ng-repeat='porudzbina in porudzbine | filter:search:strict | orderBy:orderByField:reverseSort'>
@@ -92,7 +82,6 @@
         <td>{{porudzbina.napravljena}}</td>
         <td>{{porudzbina.ime}} {{porudzbina.prezime}}</td>
         <td>{{porudzbina.stoID}}</td>
-        <td>{{porudzbina.razduzenjeID}}</td>
         <td><button role='button' class='btn btn-warning' ng-click="izmeniPorudzbinu(porudzbina);" data-toggle="modal" href="#editModal">Izmeni</button></td>
     </tr>
     </tbody>

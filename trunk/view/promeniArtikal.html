@@ -1,0 +1,55 @@
+
+<div class="col-md-4 col-md-offset-4">
+    <h3>Promeni podatke</h3>
+    <br/>
+    <div ng-repeat='artikal in artikli'>
+        <form >
+            <div class="input-group">
+                <span class="input-group-addon"><span class='glyphicon glyphicon-pencil'></span></span>
+                <input type='text' class='form-control' ng-model='artikal.artikalID' placeholder='ID artikla' readonly/>
+            </div>
+            <br/>
+            <div class="input-group">
+                <span class="input-group-addon"><span class='glyphicon glyphicon-user'></span></span>
+                <input type='text' class='form-control' ng-model='artikal.nazivArtikla' placeholder='Naziv'/>
+            </div>
+            <br/>
+            <div class="input-group">
+                <span class="input-group-addon"><span class='glyphicon glyphicon-user'></span></span>
+                <input type='text' class='form-control' ng-model='artikal.ambalaza' placeholder='Ambalaža'/>
+            </div>
+            <br/>
+            <div class="input-group">
+                <span class="input-group-addon"><span class='glyphicon glyphicon-calendar'></span></span>
+                <input type='text' class='form-control' ng-model='artikal.rokTrajanja' placeholder='Rok trajanja'/>
+            </div>
+            <br/>
+            <div class="input-group">
+                <span class="input-group-addon"><span class='glyphicon glyphicon-globe'></span></span>
+                <input type='text' class='form-control' ng-model='artikal.stanjeNaZalihama' placeholder='Stanje na zalihama'/>
+            </div>
+            <br/>
+            <div class="input-group">
+                <span class="input-group-addon">@</span>
+                <input type='text' class='form-control' ng-model='artikal.cena' placeholder='Cena'/>
+            </div>
+            <br/>
+            <div class="input-group">
+                <span class="input-group-addon"><span class='glyphicon glyphicon-lock'></span></span>
+                <select class='form-control' ng-model="artikal.distributerID" ng-options="distributer.distributerID as distributer.nazivDistributera for distributer in distributeri | orderBy:'nazivDistributera'">
+                    <option></option>
+                </select><br/>
+            </div>
+            <br/>
+            <div class="input-group">
+                <span class="input-group-addon"><span class='glyphicon glyphicon-lock'></span></span>
+                <select class='form-control' ng-model="artikal.kategorijaID" ng-options="kategorija.kategorijaID as kategorija.nazivKategorije for kategorija in kategorije | orderBy:'nazivKategorije'">
+                    <option></option>
+                </select><br/>
+            </div>
+            <br/>
+            <button type="button" class="btn btn-info btn-block" data-dismiss="modal" ng-click="sacuvaj(artikal)">Sačuvaj izmene</button><br/>
+        </form>
+
+    </div>
+</div>

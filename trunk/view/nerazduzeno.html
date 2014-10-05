@@ -72,16 +72,7 @@
 				</span>
 			</label>
 		</td>
-		<td>
-			<label ng-click="orderByField = 'ukupnaVrednost'; reverseSort = !reverseSort">
-				<b>Iznos</b>
-				<span ng-show="orderByField == 'ukupnaVrednost'">
-					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-down"></span>
-					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-up"></span>
-				</span>
-			</label>
-		</td>
-		<td><b></b></td>
+		<td></td><td></td>
 	</tr>
     <tr ng-repeat='porudzbina in porudzbine | filter:search:strict | orderBy:orderByField:reverseSort'>
         <td>{{porudzbina.porudzbinaID}}</td>
@@ -90,8 +81,14 @@
         <td>{{porudzbina.napravljena}}</td>
         <td>{{porudzbina.ime}} {{porudzbina.prezime}}</td>
         <td>{{porudzbina.stoID}}</td>
-        <td>{{porudzbina.ukupnaVrednost}} din.</td>
-        <td><button role='button' class='btn btn-warning' ng-click="izmeniPorudzbinu(porudzbina);" data-toggle="modal" href="#editModal">Izmeni</button></td>
+        <td><button role='button' class='btn btn-success' ng-click="izmeniPorudzbinu(porudzbina);" data-toggle="modal" href="#editModal">
+            <span class="glyphicon glyphicon-edit"></span>&nbsp;Izmeni </button>
+        </td>
+        <td ng-controller="PorudzbinaListCtrl">
+            <button role='button' class='btn btn-danger' ng-click="razduzi(porudzbina);" >
+                <span class="glyphicon glyphicon-usd"></span>&nbsp;Razduži
+            </button>
+        </td>
     </tr>
     </tbody>
 </table>
