@@ -518,7 +518,11 @@ app.controller('PorudzbinaListCtrl',function($http, $scope, $location, Porudzbin
 
         console.log(novaPorudzbina);
         var $promise = $http.post('php/porudzbinaID.php',novaPorudzbina);
-        if ($promise) console.log($promise);
+        $promise.then(function(msg){
+            console.log(msg.data);
+            sessionStorage.porudzbinaID = msg.data;
+            console.log("ss: "+ sessionStorage.porudzbinaID);
+        });
         /*if(novaPorudzbina.stoID){
             novaPorudzbina.$save(function(){
                $scope.porudzbine.push(novaPorudzbina);
@@ -527,15 +531,27 @@ app.controller('PorudzbinaListCtrl',function($http, $scope, $location, Porudzbin
         }*/
     }
 
-    $scope.dodaj = function(){
-        console.log("stavke: "+$scope.stavke.length);
-        var novaStavka = new StavkaService($scope.stavka);
-        novaStavka.porudzbinaID = "5540";
+    var stavke = [];
+    $scope.dodaj = function(stavka){
+
+        if (stavka == 'sacuvaj'){
+            console.log(stavke);
+            for (var i = 0; i<stavke.length; i++){
+                stavke[i].$save(function(){
+                    $scope.stavke.push(stavke[i]);
+                })
+            }
+        }else{
+            stavke.push($scope.stavka);
+            console.log(stavke);
+        }
+        /*var novaStavka = new StavkaService($scope.stavka);
+        novaStavka.porudzbinaID = sessionStorage.porudzbinaID;
         console.log(novaStavka);
         novaStavka.$save(function(){
             $scope.stavke.push(novaStavka);
             alert("sacuvana stavka");
-        });
+        });*/
     }
 
     $scope.razduzi = function() {
@@ -738,6 +754,8 @@ app.controller('StavkaListCtrl',function($scope, $location, StavkaService, Artik
     }
 
     $scope.dodaj = function(){
+        var stavke = [];
+        if ($scope.sacuvaj){}
         var novaStavka = new StavkaService($scope.stavka);
         novaStavka.porudzbinaID = "5540";
         console.log(novaStavka);
