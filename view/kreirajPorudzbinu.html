@@ -37,27 +37,6 @@
             </tr>
         </table>
 
-
-        <!--<label>Datum porudžbine</label><br/>
-        <input type='text' ng-model="porudzbina.datumPorudzbine"/><br/>
-        <label>Razduženo</label><br/>
-        <select ng-init="porudzbina.razduzeno=0" ng-model="porudzbina.razduzeno">
-            <option selected="selected" value="0">NE</option>
-            <option value="1">DA</option>
-        </select><br/>
-        <label>Napravljena</label><br/>
-        <select ng-init="porudzbina.napravljena=0" ng-model="porudzbina.napravljena">
-            <option value="0">NE</option>
-            <option value="1">DA</option>
-        </select><br/>
-        <label>Konobar</label><br/>
-        <select ng-model="porudzbina.konobarID" ng-options="konobar.konobarID as konobar.ime+' '+konobar.prezime for konobar in konobari | orderBy:'ime'">
-            <option></option>
-        </select><br/>
-        <label>Sto</label><br/>
-        <select ng-model="porudzbina.stoID" ng-options="sto.stoID as sto.brojStola for sto in stolovi">
-            <option></option>
-        </select>-->
     </form><br/>
 </div>
 <div class="footer">
@@ -82,6 +61,20 @@
                 }
             });
         });
+        function dodajRed(){
+            $("#mytable").each(function () {
+                var tds = '<tr>';
+                jQuery.each($('tr:last td', this), function () {
+                    tds += '<td>' + $(this).html() + '</td>';
+                });
+                tds += '</tr>';
+                if ($('tbody', this).length > 0) {
+                    $('tbody', this).append(tds);
+                } else {
+                    $(this).append(tds);
+                }
+            });
+        };
     </script>
     <script>
         function deleteRow(t)
@@ -92,14 +85,14 @@
     </script>
 
     <h4 class="title">Stavke porudžbine &nbsp;</h4></br>
-    <button class="btn btn-success" href="" title="" class="dodaj-red" id="dodaj">
+    <button class="btn btn-success" class="dodaj-red" onclick="dodajRed()">
         <span class="glyphicon glyphicon-plus"></span>&nbsp;Dodaj red
     </button>
 </div><br/>
 <div >
     <form>
         <table id="mytable">
-            <thead><th>Artikal</th><th>Kolicina</th><th></th></thead>
+            <thead><th>Artikal</th><th>Kolicina</th><th></th><th></th></thead>
             <tbody>
             <tr style="margin: 5px;">
                 <td style="margin: 10px;">
@@ -110,8 +103,13 @@
                 <td>
                     <input name="kolicina" id="kolicina" style="height: 25px;" type='text' ng-model="stavka.kolicina"/>
                 </td>
-                <td><input style="height: 25px; width: 50%;" class="btn btn-danger btn-xs" onclick="deleteRow(this)" value="Obriši red">
-
+                <td>
+                    <button class="btn btn-success btn-xs" ng-click="dodaj(stavka)" onclick="dodajRed()">
+                        <span class="glyphicon glyphicon-plus"></span>&nbsp;Dodaj red
+                    </button>
+                </td>
+                <td>
+                    <input style="height: 25px; width: 50%;" class="btn btn-danger btn-xs" onclick="deleteRow(this)" value="Obriši red">
                 </td>
             </tr>
             </tbody>
@@ -120,5 +118,5 @@
 </div>
 <div class="footer">
     <button type="button" class="btn btn-danger" onclick="window.location='#/konobar'">Poništi unos</button>
-    <button type="button" class="btn btn-primary" ng-click="dodaj(stavka)">Sačuvaj izmene</button>
+    <button type="button" class="btn btn-primary" ng-click="dodaj('sacuvaj')">Sačuvaj izmene</button>
 </div>
