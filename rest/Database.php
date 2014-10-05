@@ -48,6 +48,12 @@ class Database {
 		//print_r($this->getResult()->fetch_object());
 	}
 
+    function nenapravljena ($q){
+        //print_r($q);
+        $this->ExecuteQuery($q);
+        //print_r($this->getResult()->fetch_object());
+    }
+
 	function insert ($table, $rows, $values) {
 		$query_values = implode(',',$values);
 		$insert = 'INSERT INTO '.$table;  
