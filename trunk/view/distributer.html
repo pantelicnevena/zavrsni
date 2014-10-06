@@ -27,7 +27,7 @@
 		</td>
 		<td></td><td></td>
     </tr>
-    <tr ng-repeat='distributer in distributeri | filter:search:strict | orderBy:orderByField:reverseSort'>
+    <tr ng-repeat='distributer in distributeri | filter:search:strict | orderBy:orderByField:reverseSort' onload="JavaScript:timedRefresh(500);">
         <td>{{distributer.nazivDistributera}}</td>
         <td><a ng-controller="PromeniDistributeraListCtrl" class='btn btn-warning' ng-click="izmena(distributer);" href="#/promeniDistributera">Izmeni</a></td>
         <td>

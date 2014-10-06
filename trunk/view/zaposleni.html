@@ -1,6 +1,8 @@
 <h3 >Lista konobara</h3>
+<script>
 
-
+</script>
+<div >
 <button class="btn btn-success" ng-click="izmeniKonobara('novi')" data-toggle="modal" href="#editModal">
     <span class="glyphicon glyphicon-plus"></span>&nbsp;Kreiraj novog konobara
 </button>
@@ -32,12 +34,12 @@
 
 <div class="clearfix" style="margin-bottom: 16px"></div>
 
-<div class="row">
+<div class="row" >
     <div class="col-sm-6 col-md-4"
          ng-repeat='konobar in konobari | filter:search:strict | orderBy:orderByField:reverseSort'>
         <div class="thumbnail">
             <img style="height:180px;" class="img-responsive" src="img/{{konobar.slika}}" alt="{{konobar.slika}} ...">
-            <div class="caption">
+            <div class="caption" onload="JavaScript:timedRefresh(1000);">
                 <h3>{{konobar.ime}} {{konobar.prezime}}</h3>
                 <p>Godina rodjenja: {{konobar.godinaRodjenja}}</p>
                 <p>Mesto rodjenja: {{konobar.mestoRodjenja}}</p>
@@ -77,4 +79,5 @@
      ng-include="'view/upload.html'"
      id="editModal2"
      aria-hidden="true">
+</div>
 </div>

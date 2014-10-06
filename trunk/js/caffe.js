@@ -455,10 +455,19 @@ app.controller('ArtikalListCtrl',function($scope, $location, ArtikalService, Kat
 
 app.controller('PorudzbinaListCtrl',function($http, $scope, $location, PorudzbinaService, KonobarService, StoService, StavkaService, ArtikalService) {
 
+
     PorudzbinaService.query(function(porudzbine){
         $scope.porudzbine = porudzbine;
-
     });
+
+    $scope.currentPage = 0;
+    $scope.pageSize = 10;
+    $scope.porudzbine = [];
+    $scope.maxNumPages;
+    if ($scope.porudzbine.length/$scope.pageSize >3 && $scope.porudzbine.length/$scope.pageSize <4) $scope.maxNumPages = 4;
+    for (var i=0; i<50; i++) {
+        $scope.porudzbine.push("Item "+i);
+    }
 
 	StavkaService.query(function(stavke){
 		$scope.stavke = stavke;
@@ -606,6 +615,16 @@ app.controller('PorudzbinaListCtrl',function($http, $scope, $location, Porudzbin
         });
     };
 
+});
+
+app.filter('startFrom', function() {
+    return function(input, start) {
+        if(input) {
+            start = +start; //parse to int
+            return input.slice(start);
+        }
+        return [];
+    }
 });
 
 app.controller('DistributerListCtrl',function($scope, $location, DistributerService) {
@@ -806,6 +825,13 @@ app.controller('StavkaListCtrl',function($scope, $location, StavkaService, Artik
 });
 
 app.controller('StoListCtrl',function($scope, $location, StoService) {
+
+    $scope.currentPage = 0;
+    $scope.pageSize = 10;
+    $scope.data = [];
+    for (var i=0; i<50; i++) {
+        $scope.data.push("Item "+i);
+    }
 
     StoService.query(function(stolovi){
         $scope.stolovi = stolovi;
@@ -1286,18 +1312,28 @@ app.controller('ZaposleniDetaljiListCtrl',function($scope, $location, KonobarSer
 app.controller('StoDetaljiListCtrl',function($scope, $location, StoService) {
 
     $scope.izmena = function(sto){
-        $scope.sto = sto;
-        var stoID = sto.stoID;
-        sessionStorage.index = stoID;
-        console.log(stoID);
+        if(sto === 'novi'){
+            $scope.noviSto = true;
+            $scope.sto = {
+                brojStola: ""
+            };
+        }
+        else {
+            $scope.noviSto = false;
+            $scope.sto = sto;
+            var stoID = sto.stoID;
+            sessionStorage.index = stoID;
+            console.log(stoID);
+        }
     }
 
-    StoService.query({id: sessionStorage.index}, function(stolovi){
+
+        StoService.query({id: sessionStorage.index}, function(stolovi){
         $scope.stolovi = stolovi;
-    });
+        });
+
 
     $scope.izmeniSto = function (sto) {
-
         if(sto === 'novi'){
             $scope.noviSto = true;
             $scope.sto = {

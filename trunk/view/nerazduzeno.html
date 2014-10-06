@@ -74,7 +74,7 @@
 		</td>
 		<td></td><td></td>
 	</tr>
-    <tr ng-repeat='porudzbina in porudzbine | filter:search:strict | orderBy:orderByField:reverseSort'>
+    <tr ng-repeat='porudzbina in porudzbine | filter:search:strict | orderBy:orderByField:reverseSort' onload="JavaScript:timedRefresh(500);">
         <td>{{porudzbina.porudzbinaID}}</td>
         <td>{{porudzbina.datumPorudzbine}}</td>
         <td>{{porudzbina.razduzeno}}</td>
