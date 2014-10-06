@@ -12,6 +12,7 @@
     <tr>
         <th>Kategorija</th>
         <th>&nbsp;</th>
+        <th>&nbsp;</th>
     </tr>
     </thead>
     <tbody>
@@ -25,11 +26,16 @@
 				</span>
 			</label>
 		</td>
-		<td></td>
+		<td></td><td></td>
 	</tr>
     <tr ng-repeat='kategorija in kategorije | filter:search:strict | orderBy:orderByField:reverseSort'>
         <td>{{kategorija.nazivKategorije}}</td>
-        <td><button role='button' class='btn btn-warning' ng-click="izmeniKategoriju(kategorija);" data-toggle="modal" href="#editModal">Izmeni</button></td>
+        <td><a ng-controller="PromeniKategorijuListCtrl" class='btn btn-warning' ng-click="izmena(kategorija);" href="#/promeniKategoriju">Izmeni</a></td>
+        <td>
+            <button ng-controller="KategorijaListCtrl" class="btn btn-danger" ng-click="delete(kategorija)">
+                <span class="glyphicon glyphicon-trash"></span> &nbsp;Obriši
+            </button>
+        </td>
     </tr>
     </tbody>
 </table>

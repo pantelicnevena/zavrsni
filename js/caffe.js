@@ -16,7 +16,7 @@ app.config(function($routeProvider) {
         .when('/distributeri', {templateUrl: 'view/distributer.html', controller: 'DistributerListCtrl'})
         .when('/promeniDistributera', {templateUrl: 'view/promeniDistributera.html', controller: 'PromeniDistributeraListCtrl'})
         .when('/kategorije', {templateUrl: 'view/kategorija.html', controller: 'KategorijaListCtrl'})
-        .when('/promeniKategoriju', {templateUrl: 'view/promeniKategoriju.html', controller: 'KategorijaListCtrl'})
+        .when('/promeniKategoriju', {templateUrl: 'view/promeniKategoriju.html', controller: 'PromeniKategorijuListCtrl'})
         .when('/stolovi', {templateUrl: 'view/sto.html', controller: 'StoListCtrl'})
         .when('/nerazduzeno', {templateUrl: 'view/nerazduzeno.html', controller: 'NerazduzenoListCtrl'})
         .when('/nenapravljena', {templateUrl: 'view/nenapravljena.html', controller: 'NenapravljenaListCtrl'})
@@ -1504,5 +1504,72 @@ app.controller('PromeniDistributeraListCtrl',function($scope, $location, Distrib
             }
         });
     };
+
+});
+
+app.controller('PromeniKategorijuListCtrl',function($scope, $location, KategorijaService) {
+
+    $scope.izmena = function(kategorija){
+        $scope.kategorija = kategorija;
+        var kategorijaID = kategorija.kategorijaID;
+        sessionStorage.index = kategorijaID;
+    }
+
+     KategorijaService.query({id: sessionStorage.index}, function(kategorije){
+        $scope.kategorije = kategorije;
+     });
+
+    $scope.izmeniKategoriju = function (kategorija) {
+
+        if(kategorija === 'novi'){
+            $scope.novaKategorija = true;
+            $scope.kategorija = {
+                nazivKategorije: ""
+            };
+        }
+        else {
+            $scope.novaKategorija = false;
+            $scope.kategorija = kategorija;
+        }
+    }
+
+    $scope.save = function(kategorija){
+        kategorija.$save({id: kategorija.kategorijaID});
+        window.location.replace("#/kategorije");
+        alert("Podaci su uspesno sacuvani.");
+        sessionStorage.removeItem("index");
+    }
+
+    /*$scope.save = function() {
+        if (!$scope.kategorija.kategorijaID) {
+            var novaKategorija = new KategorijaService($scope.kategorija);
+            if (novaKategorija.nazivKategorije === ""){
+                window.alert("Niste popunili polje za naziv kategorije.");
+            }else{
+                novaKategorija.$save(function(){
+                    $scope.kategorije.push(novaKategorija);
+                });
+            }
+        } else {
+            $scope.kategorije.forEach(function(e) {
+                if (e.kategorijaID === $scope.kategorija.kategorijaID) {
+                    e.$save({id: e.kategorijaID});
+                }
+            });
+        }
+    };*/
+
+    $scope.delete = function(kategorija) {
+        $scope.kategorije.forEach(function(e, index) {
+            if (e.kategorijaID == $scope.kategorija.kategorijaID) {
+                $scope.kategorija.$delete({id: $scope.kategorija.kategorijaID}, function() {
+                    $scope.kategorije.splice(index, 1);
+                });
+            }
+        });
+    };
+
+    $scope.orderByField = 'nazivKategorije';
+    $scope.reverseSort = false;
 
 });

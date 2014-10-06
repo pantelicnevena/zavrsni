@@ -1,6 +1,6 @@
-+ izmeni - modul - new page
++ izmeni - modul - new page (distributer, artikal, zaposleni, sto)
 	prosledi ID
-- napravljene porudzbine
++ napravljene porudzbine
 	(grupisati po porudzbinama --> napravljena porudzbina)
 + KREIRAJ PORUDZBINU
 	(sacuvaj stavkE)
