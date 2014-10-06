@@ -586,6 +586,24 @@ app.controller('PorudzbinaListCtrl',function($http, $scope, $location, Porudzbin
         }
     };
 
+    $scope.napravi = function() {
+        if ($scope.porudzbina) console.log($scope.porudzbina);
+        if (!$scope.porudzbina.porudzbinaID) {
+            var novaPorudzbina = new PorudzbinaService($scope.porudzbina);
+            novaPorudzbina.$save(function(){
+                $scope.porudzbine.push(novaPorudzbina);
+            });
+        } else {
+            $scope.porudzbine.forEach(function(e) {
+                if (e.porudzbinaID === $scope.porudzbina.porudzbinaID) {
+                    e.napravljena = "1";
+                    console.log(e);
+                    e.$save({id: e.porudzbinaID});
+                }
+            });
+        }
+    };
+
      $scope.save = function() {
          if ($scope.porudzbina) console.log($scope.porudzbina);
          if (!$scope.porudzbina.porudzbinaID) {
@@ -1062,7 +1080,7 @@ app.controller('NenapravljenaListCtrl',function($scope, $location, Nenapravljena
 	StoService.query(function(stolovi){
 		$scope.stolovi = stolovi;
 	});
-	
+
 
     $scope.izmeniPorudzbinu = function (porudzbina) {
 

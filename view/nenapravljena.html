@@ -1,5 +1,6 @@
-<h3 xmlns="http://www.w3.org/1999/html">Lista nenapravljenih porudžbina</h3>
-		<br/>
+<h3 >Lista nenapravljenih porudžbina</h3><br/>
+
+
 <div class="pull-right">
 	<label >Pronađi porudžbinu: &nbsp;</label>
 	<input ng-model="search.$" class="form-control">
@@ -7,20 +8,20 @@
 <div class="clearfix" style="margin-bottom: 16px;"></div>
 
 <div class="panel panel-default"
-ng-repeat='porudzbina in porudzbine | filter:search:strict | orderBy:orderByField:reverseSort'>
+ng-repeat='porudzbina in porudzbine | filter:search:strict | orderBy:orderByField:reverseSort' id="{{porudzbina.porudzbinaID}}">
     <div class="panel-heading">
         ID: {{porudzbina.porudzbinaID}} <br/>
         Broj stola: {{porudzbina.stoID}}
         <div class="pull-right ">
-            <div class="btn-group">
-                <a href="#" class="btn btn-success">Napravljeno</a>
+            <div class="btn-group" ng-controller="PorudzbinaListCtrl" id="parent">
+                <a href="" class="btn btn-success" ng-click="porudzbina.napravljena = '1'; napravi(porudzbina);" onclick="window.location.reload()">Napravljeno</a>
                 <a href="#" class="btn btn-warning" >Izmeni</a>
             </div>
         </div>
         <div class="clearfix"></div>
     </div>
     <div class="panel-body">
-        <table id="searchObjResults" class='table table-striped'>
+        <table ng-controller="NenapravljenaListCtrl" id="searchObjResults" class='table table-striped'>
             <thead>
                 <tr>
                     <th>Artikal</th>
