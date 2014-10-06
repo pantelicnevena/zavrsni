@@ -1052,6 +1052,7 @@ app.controller('NenapravljenaListCtrl',function($scope, $location, Nenapravljena
 
 	NenapravljenaService.query(function(porudzbine){
 		$scope.porudzbine = porudzbine;
+        console.log(porudzbine);
 	});
 
 	KonobarService.query(function(konobari){
