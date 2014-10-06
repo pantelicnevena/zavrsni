@@ -1,7 +1,15 @@
+<style>
+    #container .modal-content
+    {
+        height:200px;
+        overflow:auto;
+    }
+</style>
 
-<div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
+
+<div class="modal-dialog" id="overflow">
+    <div class="modal-content" id="content">
+        <div class="modal-header" id="container">
             <button type="button" class="close" data-dismiss="modal">
                 <span aria-hidden="true">&times;</span>
                 <span class="sr-only">Zatvori</span>
@@ -30,21 +38,6 @@
                 <select ng-model="porudzbina.stoID" ng-options="sto.stoID as sto.brojStola for sto in stolovi">
                     <option></option>
                 </select><br/>
-                <label>Razduženje</label><br/>
-                <input type='text' ng-model="porudzbina.razduzenjeID"/><br/>
-				<!--<br/><br/>
-				<label>Razduženje<label><br/>
-				<input type='text' ng-model="razduzenje.razduzenjeID"/><br/>
-				<label>Ukupna vrednost<label><br/>
-				<input type='text' ng-model="razduzenje.ukupnaVrednost"/><br/>
-				<label>Ukupna vrednost<label><br/>
-				<input type='text' ng-model="razduzenje.ukupnaVrednost"/><br/>
-				<label>Konobar</label><br/>
-                <select ng-model="razduzenje.konobarID" ng-options="konobar.konobarID as konobar.ime for konobar in konobari | orderBy:'ime'">
-                    <option></option>
-                </select><br/>
-				<label>Porudzbina<label><br/>
-				<input type='text' ng-model="razduzenje.porudzbinaID"/><br/>-->
             </form>
         </div>
         <div class="modal-footer">
