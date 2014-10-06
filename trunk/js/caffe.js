@@ -6,7 +6,7 @@ var upload = angular.module('app', ['angularFileUpload']);
 app.config(function($routeProvider) {
     $routeProvider
         .when('/', {templateUrl: 'view/welcome.html', controller: 'adminCtrl'})
-		.when('/admin', {templateUrl: 'view/admin.html', controller: 'adminCtrl'})
+		.when('/admin', {templateUrl: 'view/admin.html'})
 		.when('/konobar', {templateUrl: 'view/konobar.html'})
 		.when('/izvestaji', {templateUrl: 'view/izvestaji.html'})
         .when('/zaposleni', {templateUrl: 'view/zaposleni.html', controller: 'ZaposleniListCtrl'})
@@ -38,31 +38,34 @@ app.config(function($routeProvider) {
 });
 
 app.run(function($rootScope, $location, loginService){
-    var routespermission=['/welcome','/admin','/konobar','/', '/izvestaji', '/zaposleni','/artikli', '/porudzbine', 					'/distributeri',
-                         '/kategorije', '/stolovi', '/nerazduzeno', '/nenapravljena', '/izmena', '/sopstvene', '/dnevni',
-                         '/nedeljni', '/mesecni', '/godisnji'];  //route that require login
-    var adminroutes = ['/kategorije'];
+    var routespermission=['/welcome', '/konobar',
+        '/artikli', '/porudzbine',
+         '/stolovi', '/nerazduzeno', '/nenapravljena',
+        '/izmena', '/sopstvene'
+        ];  //route that require login
+    var adminroutes = ['/admin', '/kategorije',
+        '/izvestaji', '/dnevni', '/nedeljni', '/mesecni', '/godisnji',
+        '/zaposleni','/distributeri'];
     $rootScope.$on('$routeChangeStart', function(){
-        if( routespermission.indexOf($location.path()) !=-1)
-        {
-            var connected = loginService.islogged();
 
-            connected.then(function(msg){
+        var admin = loginService.isadmin();
+        var loggedIn = loginService.islogged();
+
+        if( routespermission.indexOf($location.path()) !=-1){
+            loggedIn.then(function(msg){
                 if(!msg.data) $location.path('/login');
-                console.log('msg: ' + msg.data);
             });
-
-            if (adminroutes.indexOf($location.path()) != -1){
-                var admin = loginService.isadmin();
-
-                admin.then(function(msg2){
-
-                    if(!msg2.data) $location.path('/permission');
-                    console.log('msg2: ' + msg2.data);
-                });
-            }
-
+        } else
+        if (adminroutes.indexOf($location.path()) != -1){
+            admin.then(function(msg2){
+                if(!msg2.data) $location.path('/');
+            });
+        } else if($location.path() === '/'){
+            admin.then(function(msg2){
+                if(msg2.data) $location.path('/admin');
+            });
         }
+
     });
 });
 
