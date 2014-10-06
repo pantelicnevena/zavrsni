@@ -1,7 +1,11 @@
-<h3 xmlns="http://www.w3.org/1999/html">Lista stolova</h3>
-<button class="btn btn-success" ng-click="izmeniSto('novi')" data-toggle="modal" href="#editModal">
-    <i class="icon-calendar icon-white"></i>&nbsp;Kreiraj novi sto</button>
-<table id="searchObjResults" class='table table-striped'>
+<h3 >Lista stolova</h3>
+<a ng-controller="StoDetaljiListCtrl" class="btn btn-success" ng-click="izmena('novi');" href="#/stoDetalji">
+    <i class="icon-calendar icon-white"></i>&nbsp;Kreiraj novi sto
+</a>
+<script>
+    sessionStorage.removeItem("index");
+</script>
+<table ng-controller="StoListCtrl" id="searchObjResults" class='table table-striped'>
     <thead>
     <tr>
         <th>Sto</th>
@@ -22,13 +26,28 @@
 		</td>
 		<td></td><td></td>
 	</tr>
-    <tr ng-repeat='sto in stolovi | filter:search:strict '>
+    <tr ng-repeat='sto in stolovi | filter:search:strict | startFrom:currentPage*pageSize | limitTo:pageSize' onload="JavaScript:timedRefresh(500);">
         <td>{{sto.brojStola}}</td>
         <td><a ng-controller="StoDetaljiListCtrl" class='btn btn-warning' ng-click="izmena(sto);" href="#/stoDetalji">Izmeni</a></td>
         <td><button ng-controller="StoListCtrl" class="btn btn-danger" ng-click="delete(sto)">
                 <span class="glyphicon glyphicon-trash"></span> &nbsp;Obriši
             </button>
         </td>
+    </tr>
+    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr>
+        <td >
+            <button class="btn btn-success" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+                <span class="glyphicon glyphicon-chevron-left"></span>Previous
+            </button>
+        </td>
+        <td><h4>{{currentPage+1}}/{{2}}</h4></td>
+        <td>
+            <button class="btn btn-success" ng-disabled="currentPage >= data.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+                <span class="glyphicon glyphicon-chevron-right"></span>Next
+            </button>
+        </td>
+        <td></td><td></td><td></td><td></td>
     </tr>
     </tbody>
 </table>

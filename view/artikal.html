@@ -84,7 +84,7 @@
 		</td>
 		<td></td><td></td>
     </tr>
-    <tr ng-repeat='artikal in artikli | orderBy:orderByField:reverseSort | filter:search:strict'>
+    <tr ng-repeat='artikal in artikli | orderBy:orderByField:reverseSort | filter:search:strict' onload="JavaScript:timedRefresh(500);">
         <td>{{artikal.nazivArtikla}}</td>
         <td>{{artikal.ambalaza}}</td>
         <td>{{artikal.rokTrajanja}}</td>

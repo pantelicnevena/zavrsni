@@ -28,7 +28,7 @@
 		</td>
 		<td></td><td></td>
 	</tr>
-    <tr ng-repeat='kategorija in kategorije | filter:search:strict | orderBy:orderByField:reverseSort'>
+    <tr ng-repeat='kategorija in kategorije | filter:search:strict | orderBy:orderByField:reverseSort' onload="JavaScript:timedRefresh(500);">
         <td>{{kategorija.nazivKategorije}}</td>
         <td><a ng-controller="PromeniKategorijuListCtrl" class='btn btn-warning' ng-click="izmena(kategorija);" href="#/promeniKategoriju">Izmeni</a></td>
         <td>
