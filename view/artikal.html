@@ -14,6 +14,7 @@
         <th>&nbsp;</th>
         <th>&nbsp;</th>
         <th>&nbsp;</th>
+        <th>&nbsp;</th>
     </tr>
     </thead>
     <tbody>
@@ -81,7 +82,8 @@
 				</span>
 			</label>
 		</td>
-		<td><b></b></td></tr>
+		<td></td><td></td>
+    </tr>
     <tr ng-repeat='artikal in artikli | orderBy:orderByField:reverseSort | filter:search:strict'>
         <td>{{artikal.nazivArtikla}}</td>
         <td>{{artikal.ambalaza}}</td>
@@ -90,7 +92,11 @@
         <td>{{artikal.cena}} din.</td>
         <td>{{artikal.distributerID}}</td>
         <td>{{artikal.nazivKategorije}}</td>
-        <td><button role='button' class='btn btn-warning' ng-click="izmeniArtikal(artikal);" data-toggle="modal" href="#editModal">Izmeni</button></td>
+        <td><a ng-controller="PromeniArtikalListCtrl" class='btn btn-warning' ng-click="izmena(artikal);" href="#/promeniArtikal">Izmeni</a></td>
+        <td><button ng-controller="ArtikalListCtrl" class="btn btn-danger" ng-click="delete(artikal)">
+                <span class="glyphicon glyphicon-trash"></span> &nbsp;Obriši
+            </button>
+        </td>
     </tr>
     </tbody>
 </table>

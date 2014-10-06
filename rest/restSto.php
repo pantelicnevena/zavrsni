@@ -29,7 +29,7 @@ Flight::route('POST /sto/@stoID', function($stoID){
 
 Flight::route('DELETE /sto/@stoID', function($stoID){
     $sto = new Sto("stoID", "brojStola");
-    $sto->obrisiKategoriju($stoID);
+    $sto->obrisiSto($stoID);
 });
 
 ?>

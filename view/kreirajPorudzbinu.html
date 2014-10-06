@@ -2,6 +2,14 @@
 <div>
     <h3 class="title">Porudžbina</h3>
 </div><br/>
+        <script>
+            $(document).ready(function() {
+                $('#dodajStavke').hide();
+            });
+            function prikazi(){
+                $('#dodajStavke').show();
+            }
+        </script>
 <div >
     <form>
         <table style="width: 70%">
@@ -41,26 +49,19 @@
 </div>
 <div class="footer">
     <button type="button" class="btn btn-danger" onclick="window.location=''">Poništi unos</button>
-    <button type="button" class="btn btn-primary" ng-click="poruci(porudzbina)">Sačuvaj izmene</button>
+    <button type="button" class="btn btn-primary" ng-click="poruci(porudzbina)" onclick="prikazi()">Sačuvaj izmene</button>
 </div>
 <hr/>
 
-<div>
+<div id="dodajStavke">
+    <div>
     <script>
-        $("#dodaj").click(function () {
-            $("#mytable").each(function () {
-                var tds = '<tr>';
-                jQuery.each($('tr:last td', this), function () {
-                    tds += '<td>' + $(this).html() + '</td>';
-                });
-                tds += '</tr>';
-                if ($('tbody', this).length > 0) {
-                    $('tbody', this).append(tds);
-                } else {
-                    $(this).append(tds);
-                }
-            });
-        });
+        function obrisi(){
+            var kolicina = document.getElementById("kolicina");
+            kolicina.value = "";
+            var artikal = document.getElementById("artikal");
+            artikal.value = "";
+        }
         function dodajRed(){
             $("#mytable").each(function () {
                 var tds = '<tr>';
@@ -104,7 +105,7 @@
                     <input name="kolicina" id="kolicina" style="height: 25px;" type='text' ng-model="stavka.kolicina"/>
                 </td>
                 <td>
-                    <button class="btn btn-success btn-xs" ng-click="dodaj(stavka)" onclick="dodajRed()">
+                    <button class="btn btn-success btn-xs" ng-click="dodaj(stavka)" onclick="obrisi()">
                         <span class="glyphicon glyphicon-plus"></span>&nbsp;Dodaj red
                     </button>
                 </td>
@@ -115,8 +116,10 @@
             </tbody>
         </table>
     </form><br/>
+
 </div>
 <div class="footer">
     <button type="button" class="btn btn-danger" onclick="window.location='#/konobar'">Poništi unos</button>
     <button type="button" class="btn btn-primary" ng-click="dodaj('sacuvaj')">Sačuvaj izmene</button>
 </div>
+    </div>

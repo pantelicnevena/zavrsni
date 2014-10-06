@@ -11,10 +11,10 @@ app.config(function($routeProvider) {
 		.when('/izvestaji', {templateUrl: 'view/izvestaji.html'})
         .when('/zaposleni', {templateUrl: 'view/zaposleni.html', controller: 'ZaposleniListCtrl'})
         .when('/artikli', {templateUrl: 'view/artikal.html', controller: 'ArtikalListCtrl'})
-        .when('/promeniArtikal', {templateUrl: 'view/promeniArtikal.html', controller: 'ArtikalListCtrl'})
+        .when('/promeniArtikal', {templateUrl: 'view/promeniArtikal.html', controller: 'PromeniArtikalListCtrl'})
         .when('/porudzbine', {templateUrl: 'view/porudzbina.html', controller: 'PorudzbinaListCtrl'})
         .when('/distributeri', {templateUrl: 'view/distributer.html', controller: 'DistributerListCtrl'})
-        .when('/promeniDistributera', {templateUrl: 'view/promeniDistributera.html', controller: 'DistributerListCtrl'})
+        .when('/promeniDistributera', {templateUrl: 'view/promeniDistributera.html', controller: 'PromeniDistributeraListCtrl'})
         .when('/kategorije', {templateUrl: 'view/kategorija.html', controller: 'KategorijaListCtrl'})
         .when('/promeniKategoriju', {templateUrl: 'view/promeniKategoriju.html', controller: 'KategorijaListCtrl'})
         .when('/stolovi', {templateUrl: 'view/sto.html', controller: 'StoListCtrl'})
@@ -28,6 +28,8 @@ app.config(function($routeProvider) {
 		.when('/mesecni', {templateUrl: 'view/mesecni.html', controller: 'IzvestajListCtrl'})
 		.when('/godisnji', {templateUrl: 'view/godisnji.html', controller: 'IzvestajListCtrl'})
         .when('/poruci', {templateUrl: 'view/kreirajPorudzbinu.html', controller: 'PorudzbinaListCtrl'})
+        .when('/zaposleniDetalji', {templateUrl: 'view/zaposleniDetalji.html', controller: 'ZaposleniDetaljiListCtrl'})
+        .when('/stoDetalji', {templateUrl: 'view/stoDetalji.html', controller: 'StoDetaljiListCtrl'})
         // AngularJS does not allow template-less controllers, so we are specifying a
         // template that we know we won't use. Here is more info on this
         // https://github.com/angular/angular.js/issues/1838
@@ -297,7 +299,7 @@ app.controller('EventListCtrl', function($scope, $location, EventService) {
     };
 });
 
-app
+
 app.controller('ZaposleniListCtrl',function($scope, $location, KonobarService) {
 
     KonobarService.query(function(konobari){
@@ -520,8 +522,7 @@ app.controller('PorudzbinaListCtrl',function($http, $scope, $location, Porudzbin
         var $promise = $http.post('php/porudzbinaID.php',novaPorudzbina);
         $promise.then(function(msg){
             console.log(msg.data);
-            sessionStorage.porudzbinaID = msg.data;
-            console.log("ss: "+ sessionStorage.porudzbinaID);
+            sessionStorage.index = msg.data;
         });
         /*if(novaPorudzbina.stoID){
             novaPorudzbina.$save(function(){
@@ -535,18 +536,22 @@ app.controller('PorudzbinaListCtrl',function($http, $scope, $location, Porudzbin
     $scope.dodaj = function(stavka){
 
         if (stavka == 'sacuvaj'){
-            console.log(stavke);
             for (var i = 0; i<stavke.length; i++){
                 stavke[i].$save(function(){
                     $scope.stavke.push(stavke[i]);
-                })
+                });
             }
         }else{
-            stavke.push($scope.stavka);
-            console.log(stavke);
+            var novaStavka = new StavkaService($scope.stavka);
+            novaStavka.porudzbinaID = sessionStorage.index;
+            stavke.push(novaStavka);
+            for (var i = 0; i<stavke.length; i++){
+                console.log(stavke[i]);
+            }
+            sessionStorage.removeItem("index");
         }
         /*var novaStavka = new StavkaService($scope.stavka);
-        novaStavka.porudzbinaID = sessionStorage.porudzbinaID;
+        novaStavka.porudzbinaID = sessionStorage.index;
         console.log(novaStavka);
         novaStavka.$save(function(){
             $scope.stavke.push(novaStavka);
@@ -1190,5 +1195,314 @@ app.controller('IzvestajListCtrl',function($scope, $location, DnevniService, Pos
     $scope.orderByField = 'datumPorudzbine';
     $scope.reverseSort = false;
 
+
+});
+
+
+app.controller('ZaposleniDetaljiListCtrl',function($scope, $location, KonobarService) {
+
+    $scope.izmena = function(konobar){
+        $scope.konobar = konobar;
+        var konobarID = konobar.konobarID;
+        sessionStorage.index = konobarID;
+    }
+
+    console.log($scope.konobar);
+    var $konobarID = sessionStorage.index;
+    KonobarService.query({id: $konobarID}, function(konobari){
+        $scope.konobari = konobari;
+    });
+
+    $scope.izmeniKonobara = function (konobar) {
+        if(konobar === 'novi'){
+            $scope.noviKonobar = true;
+            $scope.konobar = {
+                ime: "",
+                prezime: "",
+                godinaRodjenja: "",
+                mestoRodjenja: "",
+                korisnickoIme: "",
+                korisnickaSifra: "",
+                role: "",
+                slika: ""
+            };
+        }
+        else {
+            $scope.noviKonobar = false;
+            $scope.konobar = konobar;
+        }
+    }
+
+    $scope.save = function(konobar){
+        konobar.$save({id: konobar.konobarID});
+        window.location.href = "#/zaposleni";
+        alert("Podaci su uspesno sacuvani.");
+        sessionStorage.removeItem("index");
+    }
+
+    /*$scope.save = function(konobar) {
+        if (!$scope.konobar.konobarID) {
+            var noviKonobar = new KonobarService($scope.konobar);
+            if (noviKonobar.slika === "") noviKonobar.slika = "default.jpg";
+            if (noviKonobar.ime === ""
+                || noviKonobar.prezime===""
+                || noviKonobar.godinaRodjenja===""
+                || noviKonobar.mestoRodjenja===""
+                || noviKonobar.korisnickoIme===""
+                || noviKonobar.korisnickaSifra===""
+                || noviKonobar.role===""){
+                //$msg = "Niste popunili sva polja.";
+                window.alert("Niste popunili sva polja.");
+            }else{
+                noviKonobar.$save(function(){
+                    $scope.konobari.push(noviKonobar)
+                });
+            }
+
+        } else {
+            $scope.konobari.forEach(function(e) {
+                if (e.konobarID === $scope.konobar.konobarID) {
+                    e.$save({id: e.konobarID});
+                }
+            });
+        }
+    };*/
+
+    $scope.delete = function(konobar) {
+        $scope.konobar = konobar;
+        $scope.konobari.forEach(function(e, index) {
+            if (e.konobarID === $scope.konobar.konobarID) {
+                $scope.konobar.$delete({id: $scope.konobar.konobarID}, function() {
+                    $scope.konobari.splice(index, 1);
+                });
+            }
+        });
+    };
+
+    $scope.orderByField = 'ime';
+    $scope.reverseSort = false;
+});
+
+app.controller('StoDetaljiListCtrl',function($scope, $location, StoService) {
+
+    $scope.izmena = function(sto){
+        $scope.sto = sto;
+        var stoID = sto.stoID;
+        sessionStorage.index = stoID;
+        console.log(stoID);
+    }
+
+    StoService.query({id: sessionStorage.index}, function(stolovi){
+        $scope.stolovi = stolovi;
+    });
+
+    $scope.izmeniSto = function (sto) {
+
+        if(sto === 'novi'){
+            $scope.noviSto = true;
+            $scope.sto = {
+                brojStola: ""
+            };
+        }
+        else {
+            $scope.noviSto = false;
+            $scope.sto = sto;
+        }
+    }
+
+    $scope.save = function(sto){
+        sto.$save({id: sto.stoID});
+        window.location.href = "#/stolovi";
+        alert("Podaci su uspesno sacuvani.");
+        sessionStorage.removeItem("index");
+    }
+
+    /*$scope.save = function() {
+        if (!$scope.sto.stoID) {
+            var noviSto = new StoService($scope.sto);
+            if (noviSto.brojStola === ""){
+                window.alert("Niste popunili polje za redni broj stola.");
+            }else{
+                noviSto.$save(function(){
+                    $scope.stolovi.push(noviSto);
+                });
+            }
+        } else {
+            $scope.stolovi.forEach(function(e) {
+                if (e.stoID === $scope.sto.stoID) {
+                    e.$save({id: e.stoID});
+                }
+            });
+        }
+    };*/
+
+    $scope.delete = function(sto) {
+        $scope.stolovi.forEach(function(e, index) {
+            if (e.stoID == $scope.sto.stoID) {
+                $scope.sto.$delete({id: $scope.sto.stoID}, function() {
+                    $scope.stolovi.splice(index, 1);
+                });
+            }
+        });
+    };
+
+    $scope.orderByField = 'brojStola';
+    $scope.reverseSort = false;
+
+});
+
+app.controller('PromeniArtikalListCtrl',function($scope, $location, ArtikalService, KategorijaService, DistributerService) {
+
+    $scope.izmena = function(artikal){
+        $scope.artikal = artikal;
+        var artikalID = artikal.artikalID;
+        sessionStorage.index = artikalID;
+    }
+
+    ArtikalService.query({id: sessionStorage.index},function(artikli){
+        $scope.artikli = artikli;
+    });
+
+    KategorijaService.query(function(kategorije){
+        $scope.kategorije = kategorije;
+    });
+
+    DistributerService.query(function(distributeri){
+        $scope.distributeri = distributeri;
+    });
+
+    $scope.izmeniArtikal = function (artikal) {
+        if(artikal === 'novi'){
+            $scope.noviArtikal = true;
+            $scope.artikal = {
+                nazivArtikla: "",
+                ambalaza: "",
+                rokTrajanja: "",
+                stanjeNaZalihama: "",
+                cena: "",
+                distributerID: "",
+                kategorijaID: ""
+            };
+        }
+        else {
+            $scope.noviArtikal = false;
+            $scope.artikal = artikal;
+        }
+    }
+
+
+    /*$scope.save = function() {
+        if (!$scope.artikal.artikalID) {
+            var noviArtikal = new ArtikalService($scope.artikal);
+            if (noviArtikal.nazivArtikla === ""
+                || noviArtikal.ambalaza===""
+                || noviArtikal.rokTrajanja===""
+                || noviArtikal.stanjeNaZalihama===""
+                || noviArtikal.cena===""
+                || noviArtikal.distributerID===""
+                || noviArtikal.kategorijaID===""){
+                window.alert("Niste popunili sva polja.");
+            }else{
+                noviArtikal.$save(function(){
+                    $scope.artikli.push(noviArtikal);
+                });
+            }
+        }
+        else {
+            $scope.artikli.forEach(function(e) {
+                if (e.artikalID === $scope.artikal.artikalID) {
+                    e.$save({id: e.artikalID});
+                }
+            });
+        }
+    };*/
+
+    $scope.save = function(artikal){
+        artikal.$save({id: artikal.artikalID});
+        window.location.href = "#/artikli";
+        alert("Podaci su uspesno sacuvani.");
+        sessionStorage.removeItem("index");
+    }
+
+    $scope.delete = function(artikal) {
+        $scope.artikli.forEach(function(e, index) {
+            if (e.artikalID === $scope.artikal.artikalID) {
+                $scope.artikal.$delete({id: $scope.artikal.artikalID}, function() {
+                    $scope.artikli.splice(index, 1);
+                });
+            }
+        });
+    };
+
+    $scope.orderByField = 'nazivArtikla';
+    $scope.reverseSort = false;
+});
+
+app.controller('PromeniDistributeraListCtrl',function($scope, $location, DistributerService) {
+
+    $scope.izmena = function(distributer){
+        $scope.distributer = distributer;
+        var distributerID = distributer.distributerID;
+        sessionStorage.index = distributerID;
+    }
+
+    DistributerService.query({id: sessionStorage.index},function(distributeri){
+        $scope.distributeri = distributeri;
+
+    });
+
+    $scope.izmeniDistributera = function (distributer) {
+
+        if(distributer === 'novi'){
+            $scope.noviDistributer = true;
+            $scope.distributer = {
+                nazivDistributera: ""
+            };
+        }
+        else {
+            $scope.noviDistributer = false;
+            $scope.distributer = distributer;
+        }
+    }
+
+    /*$scope.save = function() {
+        if (!$scope.distributer.distributerID) {
+            var noviDistributer = new DistributerService($scope.distributer);
+            if (noviDistributer.nazivDistributera === ""){
+                window.alert("Niste popunili polje za naziv distributera.");
+            }else{
+                noviDistributer.$save(function(){
+                    $scope.distributeri.push(noviDistributer);
+                });
+            }
+        } else {
+            $scope.distributeri.forEach(function(e) {
+                if (e.distributerID === $scope.distributer.distributerID) {
+                    e.$save({id: e.distributerID});
+                }
+            });
+        }
+    };*/
+
+    $scope.save = function(distributer){
+        distributer.$save({id: distributer.distributerID});
+        window.location.href = "#/distributeri";
+        alert("Podaci su uspesno sacuvani.");
+        sessionStorage.removeItem("index");
+    }
+
+    $scope.orderByField = 'nazivDistributera';
+    $scope.reverseSort = false;
+
+
+    $scope.delete = function(distributer) {
+        $scope.distributeri.forEach(function(e, index) {
+            if (e.distributerID == $scope.distributer.distributerID) {
+                $scope.distributer.$delete({id: $scope.distributer.distributerID}, function() {
+                    $scope.distributeri.splice(index, 1);
+                });
+            }
+        });
+    };
 
 });
