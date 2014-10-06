@@ -1,0 +1,20 @@
+<div class="col-md-4 col-md-offset-4">
+    <h3>Promeni podatke o distributeru</h3>
+    <br/>
+    <div ng-repeat='sto in stolovi'>
+        <form>
+            <div class="input-group">
+                <span class="input-group-addon"><span class='glyphicon glyphicon-lock'></span></span>
+                <input type='text' class='form-control' ng-model='sto.stoID' placeholder='ID stola' readonly/>
+            </div>
+            <br/>
+            <div class="input-group">
+                <span class="input-group-addon"><span class='glyphicon glyphicon-pencil'></span></span>
+                <input type='text' class='form-control' ng-model='sto.brojStola' placeholder='Broj stola'/>
+            </div>
+            <br/>
+            <button type="button" class="btn btn-info btn-block" data-dismiss="modal" ng-click="save(sto)">Sačuvaj izmene</button><br/>
+        </form>
+
+    </div>
+</div>

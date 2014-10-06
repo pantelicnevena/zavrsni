@@ -1,0 +1,20 @@
++ izmeni - modul - new page
+	prosledi ID
+- napravljene porudzbine
+	(grupisati po porudzbinama --> napravljena porudzbina)
++ KREIRAJ PORUDZBINU
+	(sacuvaj stavkE)
++ mysql_insert_id	
+	http://goo.gl/9gxn9
+- trigger za zalihe artikala
+
+______________________________________________________________________
+
+- vrati sve nove (stavke/zaposlene/porudzbine)
+- upload slike	http://goo.gl/0sBa8s
+- ako nisu uneti podaci - alert-warrning
+- navbar (Logout, Ime i prezime)
+- jChart (http://goo.gl/VNX0a, http://goo.gl/DiogE8)
++ razduzi porudzbinu na dugme
+	UPDATE tabele
+- permisije za admina i zaposlenog

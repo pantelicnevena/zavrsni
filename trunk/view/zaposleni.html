@@ -4,6 +4,9 @@
 <button class="btn btn-success" ng-click="izmeniKonobara('novi')" data-toggle="modal" href="#editModal">
     <span class="glyphicon glyphicon-plus"></span>&nbsp;Kreiraj novog konobara
 </button>
+<!--<a ng-model="ZaposleniDetaljiListCtrl" class="btn btn-success" ng-click="izmeniKonobara('novi')" href="#/zaposleniDetalji">
+    <span class="glyphicon glyphicon-plus"></span>&nbsp;Kreiraj novog konobara
+</a>-->
 
 <div class="pull-right">
     <div class="form-horizontal">
@@ -41,24 +44,15 @@
                 <p>Korisnicko ime: {{konobar.korisnickoIme}}</p>
 
                 <div class="btn-group">
-                    <button role='button'
-                            class='btn btn-success'
-                            ng-click="izmeniKonobara(konobar);"
-                            data-toggle="modal"
-                            href="#editModal">
-                        <span class="glyphicon glyphicon-edit"></span>
-                        Izmeni
-                    </button>
 
-                    <button href="#/izmena" ng-controller="IzmenaListCtrl"
-                            ng-click="konobar;"
-                            class="btn btn-success">Izmena</button>
+                    <a ng-controller="ZaposleniDetaljiListCtrl"
+                       href="#/zaposleniDetalji"
+                       class="btn btn-success"
+                       ng-click="izmena(konobar);">
+                           <span class="glyphicon glyphicon-edit"></span>
+                            Izmena
+                    </a>
 
-                    <!--<span ng-controller="IzmenaListCtrl">
-                    <a href="#/izmena"
-                       ng-click="konobar;"
-                       class="btn btn-success">Izmena</a>
-                </span>-->
                     <button role='button' class="btn btn-danger" ng-click="delete(konobar)">
                         <span class="glyphicon glyphicon-trash"></span> &nbsp;Obriši
                     </button>

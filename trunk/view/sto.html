@@ -6,6 +6,7 @@
     <tr>
         <th>Sto</th>
         <th>&nbsp;</th>
+        <th>&nbsp;</th>
     </tr>
     </thead>
     <tbody>
@@ -19,11 +20,15 @@
 				</span>
 			</label>
 		</td>
-		<td><b></b></td>
+		<td></td><td></td>
 	</tr>
     <tr ng-repeat='sto in stolovi | filter:search:strict '>
         <td>{{sto.brojStola}}</td>
-        <td><button role='button' class='btn btn-warning' ng-click="izmeniSto(sto);" data-toggle="modal" href="#editModal">Izmeni</button></td>
+        <td><a ng-controller="StoDetaljiListCtrl" class='btn btn-warning' ng-click="izmena(sto);" href="#/stoDetalji">Izmeni</a></td>
+        <td><button ng-controller="StoListCtrl" class="btn btn-danger" ng-click="delete(sto)">
+                <span class="glyphicon glyphicon-trash"></span> &nbsp;Obriši
+            </button>
+        </td>
     </tr>
     </tbody>
 </table>
