@@ -219,10 +219,26 @@ class Porudzbina implements JsonSerializable {
     public static function vratiNapravljenePorudzbine($napravljena){
         header ("Content-Type: application/json; charset=utf-8");
         $db = Flight::db();
-        $db->nenapravljena("select porudzbina.porudzbinaID, porudzbina.napravljena, porudzbina.stoID, stavka.kolicina, artikal.nazivArtikla from porudzbina inner join stavka on stavka.porudzbinaID = porudzbina.porudzbinaID inner join artikal on artikal.artikalID = stavka.artikalID where porudzbina.napravljena = ". $napravljena);
+        //$db->nenapravljena("select porudzbina.porudzbinaID, porudzbina.napravljena, porudzbina.stoID,
+        //stavka.kolicina, artikal.nazivArtikla from porudzbina
+        //inner join stavka on stavka.porudzbinaID = porudzbina.porudzbinaID
+        //inner join artikal on artikal.artikalID = stavka.artikalID
+        //where porudzbina.napravljena = ". $napravljena);
+        $db->nenapravljena("select * from porudzbina where porudzbina.napravljena = ".$napravljena);
         $niz=array();
         while ($red=$db->getResult()->fetch_object()){
             $niz[] = $red;
+        }
+        $len = count($niz);
+        for($i = 0; $i < $len; $i++){
+            $id = $niz[$i]->porudzbinaID;
+            $db->nenapravljena("select * from stavka inner join artikal on artikal.artikalID = stavka.artikalID where porudzbinaID=".$id);
+            $niz[$i]->stavke = array();
+            while($red=$db->getResult()->fetch_object()){
+                $niz[$i]->stavke[]=$red;
+            }
+
+
         }
         $json_niz = json_encode ($niz,JSON_UNESCAPED_UNICODE);
         echo indent($json_niz);
@@ -347,4 +363,4 @@ class Porudzbina implements JsonSerializable {
         }
     }
 
-} 
+}

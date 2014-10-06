@@ -4,6 +4,41 @@
 	<label >Pronađi porudžbinu: &nbsp;</label>
 	<input ng-model="search.$" class="form-control">
 </div>
+<div class="clearfix" style="margin-bottom: 16px;"></div>
+
+<div class="panel panel-default"
+ng-repeat='porudzbina in porudzbine | filter:search:strict | orderBy:orderByField:reverseSort'>
+    <div class="panel-heading">
+        ID: {{porudzbina.porudzbinaID}} <br/>
+        Broj stola: {{porudzbina.stoID}}
+        <div class="pull-right ">
+            <div class="btn-group">
+                <a href="#" class="btn btn-success">Napravljeno</a>
+                <a href="#" class="btn btn-warning" >Izmeni</a>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="panel-body">
+        <table id="searchObjResults" class='table table-striped'>
+            <thead>
+                <tr>
+                    <th>Artikal</th>
+                    <th>Količina</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="stavka in porudzbina.stavke">
+                    <td>{{stavka.nazivArtikla}}</td>
+                    <td>{{stavka.kolicina}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <td>{{porudzbina.nazivArtikla}}</td>
+        <td>{{porudzbina.kolicina}}
+
+    </div>
+</div>
 		
 <table id="searchObjResults" class='table table-striped'>
     <thead>
