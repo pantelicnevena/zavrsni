@@ -6,7 +6,7 @@ var upload = angular.module('app', ['angularFileUpload']);
 app.config(function($routeProvider) {
     $routeProvider
         .when('/', {templateUrl: 'view/welcome.html', controller: 'adminCtrl'})
-		.when('/admin', {templateUrl: 'view/admin.html'})
+		.when('/admin', {templateUrl: 'view/admin.html', controller: 'adminCtrl'})
 		.when('/konobar', {templateUrl: 'view/konobar.html'})
 		.when('/izvestaji', {templateUrl: 'view/izvestaji.html'})
         .when('/zaposleni', {templateUrl: 'view/zaposleni.html', controller: 'ZaposleniListCtrl'})
@@ -27,6 +27,7 @@ app.config(function($routeProvider) {
 		.when('/nedeljni', {templateUrl: 'view/nedeljni.html', controller: 'IzvestajListCtrl'})
 		.when('/mesecni', {templateUrl: 'view/mesecni.html', controller: 'IzvestajListCtrl'})
 		.when('/godisnji', {templateUrl: 'view/godisnji.html', controller: 'IzvestajListCtrl'})
+        .when('/godisnjigrafik', {templateUrl: 'view/godisnji-grafik.html'})
         .when('/poruci', {templateUrl: 'view/kreirajPorudzbinu.html', controller: 'PorudzbinaListCtrl'})
         .when('/zaposleniDetalji', {templateUrl: 'view/zaposleniDetalji.html', controller: 'ZaposleniDetaljiListCtrl'})
         .when('/stoDetalji', {templateUrl: 'view/stoDetalji.html', controller: 'StoDetaljiListCtrl'})
@@ -467,7 +468,6 @@ app.controller('PorudzbinaListCtrl',function($http, $scope, $location, Porudzbin
     $scope.pageSize = 10;
     $scope.porudzbine = [];
     $scope.maxNumPages;
-    if ($scope.porudzbine.length/$scope.pageSize >3 && $scope.porudzbine.length/$scope.pageSize <4) $scope.maxNumPages = 4;
     for (var i=0; i<50; i++) {
         $scope.porudzbine.push("Item "+i);
     }
@@ -529,6 +529,8 @@ app.controller('PorudzbinaListCtrl',function($http, $scope, $location, Porudzbin
         var novaPorudzbina = new PorudzbinaService($scope.porudzbina);
         novaPorudzbina.datumPorudzbine = datum;
         novaPorudzbina.konobarID = $konobarID;
+        novaPorudzbina.razduzeno = "0";
+        novaPorudzbina.napravljena = "0";
 
         console.log(novaPorudzbina);
         var $promise = $http.post('php/porudzbinaID.php',novaPorudzbina);
@@ -546,21 +548,35 @@ app.controller('PorudzbinaListCtrl',function($http, $scope, $location, Porudzbin
 
     var stavke = [];
     $scope.dodaj = function(stavka){
-
+        $scope.msg = "";
+        $scope.noveStavke = stavke;
         if (stavka == 'sacuvaj'){
             for (var i = 0; i<stavke.length; i++){
                 stavke[i].$save(function(){
                     $scope.stavke.push(stavke[i]);
                 });
             }
+            sessionStorage.removeItem("index");
         }else{
             var novaStavka = new StavkaService($scope.stavka);
-            novaStavka.porudzbinaID = sessionStorage.index;
-            stavke.push(novaStavka);
-            for (var i = 0; i<stavke.length; i++){
-                console.log(stavke[i]);
+            if (!novaStavka.artikalID || !novaStavka.kolicina) $scope.msg="Niste prosledili potrebne podatke.";
+            else{
+                for (var i = 0; i<$scope.artikli.length; i++){
+                    var artikal = $scope.artikli[i];
+                    if (artikal.artikalID == novaStavka.artikalID) {
+                        novaStavka.nazivArtikla = artikal.nazivArtikla;
+                        novaStavka.cena = artikal.cena;
+                    }
+                }
+                novaStavka.porudzbinaID = sessionStorage.index;
+                stavke.push(novaStavka);
+                $scope.ukupnaVrednost = Math.abs(stavke[0].cena)*Math.abs(stavke[0].kolicina);
+                for (var i = 1; i<stavke.length; i++){
+                    console.log(stavke[i]);
+                    $scope.ukupnaVrednost += Math.abs(stavke[i].cena)*Math.abs(stavke[i].kolicina);
+                }
             }
-            sessionStorage.removeItem("index");
+
         }
         /*var novaStavka = new StavkaService($scope.stavka);
         novaStavka.porudzbinaID = sessionStorage.index;
@@ -590,7 +606,6 @@ app.controller('PorudzbinaListCtrl',function($http, $scope, $location, Porudzbin
     };
 
     $scope.napravi = function() {
-        if ($scope.porudzbina) console.log($scope.porudzbina);
         if (!$scope.porudzbina.porudzbinaID) {
             var novaPorudzbina = new PorudzbinaService($scope.porudzbina);
             novaPorudzbina.$save(function(){
@@ -801,12 +816,12 @@ app.controller('StavkaListCtrl',function($scope, $location, StavkaService, Artik
     $scope.dodaj = function(){
         var stavke = [];
         if ($scope.sacuvaj){}
-        var novaStavka = new StavkaService($scope.stavka);
-        novaStavka.porudzbinaID = "5540";
-        console.log(novaStavka);
-        novaStavka.$save(function(){
-            $scope.stavke.push(novaStavka);
-            alert("sacuvana stavka");
+            var novaStavka = new StavkaService($scope.stavka);
+            novaStavka.porudzbinaID = "5540";
+            console.log(novaStavka);
+            novaStavka.$save(function(){
+                $scope.stavke.push(novaStavka);
+                alert("sacuvana stavka");
 
         });
     }

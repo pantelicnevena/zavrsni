@@ -1,9 +1,9 @@
-<h3 xmlns="http://www.w3.org/1999/html">Lista porudzbina</h3>
+<h3 >Lista porudzbina</h3>
 
-<button class="btn btn-success" ng-click="izmeniPorudzbinu('novi')" data-toggle="modal" href="#editModal">
-    <i class="icon-calendar icon-white"></i>
-	&nbsp;Kreiraj novu porudžbinu
-</button>
+<a role='button' class='btn btn-success' href="view/godisnji-grafik.html">
+    <span class="glyphicon glyphicon-signal"></span>&nbsp;
+    Grafički prikaz
+</a>
 
 <div class="pull-right">
 	<label >Pronađi porudžbinu: &nbsp;</label>
@@ -92,5 +92,5 @@
 </table>
 
 
-<div class="modal fade"  tabindex="-1" role="dialog" ng-include="'view/porudzbina-detalji.html'" id="editModal" aria-hidden="true"></div>
+<div class="modal fade"  tabindex="-1" role="dialog" ng-include="'view/godisnji-grafik.html'" id="editModal" aria-hidden="true"></div>
 </div>

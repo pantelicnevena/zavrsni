@@ -1,125 +1,117 @@
-
-<div>
-    <h3 class="title">Porudžbina</h3>
-</div><br/>
-        <script>
-            $(document).ready(function() {
-                $('#dodajStavke').hide();
-            });
-            function prikazi(){
-                $('#dodajStavke').show();
-            }
-        </script>
-<div >
-    <form>
-        <table style="width: 70%">
-            <tr>
-                <th>Razduženo</th>
-                <th>Napravljena</th>
-            </tr>
-            <tr>
-                <td>
-                    <select style="width: 80%" ng-init="porudzbina.razduzeno=0" ng-model="porudzbina.razduzeno" required>
-                        <option selected="selected" value="0">NE</option>
-                        <option value="1">DA</option>
-                    </select><br/>
-                </td>
-                <td>
-                    <select style="width: 60%" ng-init="porudzbina.napravljena=0" ng-model="porudzbina.napravljena" required>
-                        <option value="0">NE</option>
-                        <option value="1">DA</option>
-                    </select><br/>
-                </td>
-            </tr>
-            <tr>
-                <th>Sto</th>
-                <th></th>
-            </tr>
-            <tr>
-                <td>
-                    <select style="width: 80%" ng-model="porudzbina.stoID" ng-options="sto.stoID as sto.brojStola for sto in stolovi" required>
-                        <option></option>
-                    </select>
-                </td>
-                <td style="width: 60%;"><div class="label label-success" ng-if="porudzbina.msg">{{porudzbina.msg}}</div></td>
-            </tr>
-        </table>
-
-    </form><br/>
-</div>
-<div class="footer">
-    <button type="button" class="btn btn-danger" onclick="window.location=''">Poništi unos</button>
-    <button type="button" class="btn btn-primary" ng-click="poruci(porudzbina)" onclick="prikazi()">Sačuvaj izmene</button>
-</div>
-<hr/>
-
-<div id="dodajStavke">
+<div class="col-md-4 col-md-offset-4">
     <div>
-    <script>
-        function obrisi(){
-            var kolicina = document.getElementById("kolicina");
-            kolicina.value = "";
-            var artikal = document.getElementById("artikal");
-            artikal.value = "";
-        }
-        function dodajRed(){
-            $("#mytable").each(function () {
-                var tds = '<tr>';
-                jQuery.each($('tr:last td', this), function () {
-                    tds += '<td>' + $(this).html() + '</td>';
-                });
-                tds += '</tr>';
-                if ($('tbody', this).length > 0) {
-                    $('tbody', this).append(tds);
-                } else {
-                    $(this).append(tds);
-                }
-            });
-        };
-    </script>
-    <script>
-        function deleteRow(t)
-        {
-            var row = t.parentNode.parentNode.rowIndex;
-            document.getElementById("mytable").deleteRow(row);
-        }
-    </script>
-
-    <h4 class="title">Stavke porudžbine &nbsp;</h4></br>
-    <button class="btn btn-success" class="dodaj-red" onclick="dodajRed()">
-        <span class="glyphicon glyphicon-plus"></span>&nbsp;Dodaj red
-    </button>
-</div><br/>
-<div >
-    <form>
-        <table id="mytable">
-            <thead><th>Artikal</th><th>Kolicina</th><th></th><th></th></thead>
-            <tbody>
-            <tr style="margin: 5px;">
-                <td style="margin: 10px;">
-                    <select name="artikal" id="artikal" style="height: 25px;" ng-model="stavka.artikalID" ng-options="artikal.artikalID as artikal.nazivArtikla for artikal in artikli">
-                        <option></option>
-                    </select>
-                </td>
-                <td>
-                    <input name="kolicina" id="kolicina" style="height: 25px;" type='text' ng-model="stavka.kolicina"/>
-                </td>
-                <td>
-                    <button class="btn btn-success btn-xs" ng-click="dodaj(stavka)" onclick="obrisi()">
-                        <span class="glyphicon glyphicon-plus"></span>&nbsp;Dodaj red
-                    </button>
-                </td>
-                <td>
-                    <input style="height: 25px; width: 50%;" class="btn btn-danger btn-xs" onclick="deleteRow(this)" value="Obriši red">
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </form><br/>
-
-</div>
-<div class="footer">
-    <button type="button" class="btn btn-danger" onclick="window.location='#/konobar'">Poništi unos</button>
-    <button type="button" class="btn btn-primary" ng-click="dodaj('sacuvaj')">Sačuvaj izmene</button>
-</div>
+        <h3 class="title">Porudžbina</h3>
     </div>
+    <br/>
+    <script>
+        $(document).ready(function() {
+            $('#dodajStavke').hide();
+        });
+        function prikazi(){
+            $('#dodajStavke').show();
+        }
+        function sakrijDugme(){
+            $('#ponisti').hide();
+        }
+    </script>
+    <div>
+        <form>
+            <table style="width: 70%">
+                <tr>
+                    <th>Sto</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>
+                        <select style="width: 80%" ng-model="porudzbina.stoID" ng-options="sto.stoID as sto.brojStola for sto in stolovi" required>
+                            <option></option>
+                        </select>
+                    </td>
+                    <td style="width: 60%;"><div class="label label-success" ng-if="porudzbina.msg">{{porudzbina.msg}}</div></td>
+                </tr>
+            </table>
+        </form><br/>
+    </div>
+    <div class="footer">
+        <button type="button" class="btn btn-primary" ng-click="poruci(porudzbina)" onclick="prikazi(); sakrijDugme()">Sačuvaj izmene</button>
+        <button type="button" class="btn btn-danger" onclick="window.location=''" id="ponisti">Poništi unos</button>
+    </div>
+    <hr/>
+
+    <div id="dodajStavke">
+        <div>
+            <script>
+                function obrisi(){
+                    var kolicina = document.getElementById("kolicina");
+                    kolicina.value = "";
+                    var artikal = document.getElementById("artikal");
+                    artikal.value = "";
+                }
+                function dodajRed(){
+                    $("#mytable").each(function () {
+                        var tds = '<tr>';
+                        jQuery.each($('tr:last td', this), function () {
+                            tds += '<td>' + $(this).html() + '</td>';
+                        });
+                        tds += '</tr>';
+                        if ($('tbody', this).length > 0) {
+                            $('tbody', this).append(tds);
+                        } else {
+                            $(this).append(tds);
+                        }
+                    });
+                };
+            </script>
+            <script>
+                function deleteRow(t)
+                {
+                    var row = t.parentNode.parentNode.rowIndex;
+                    document.getElementById("mytable").deleteRow(row);
+                }
+            </script>
+
+            <h4 class="title">Stavke porudžbine &nbsp;</h4></br>
+        </div><br/>
+        <div >
+            <form>
+                <table id="mytable">
+                    <thead><th>Artikal</th><th style="width: 50%">Kolicina</th><th></th><th></th></thead>
+                    <tbody>
+                    <tr style="margin: 5px;">
+                        <td style="margin: 10px;">
+                            <select name="artikal" id="artikal" style="height: 25px;" ng-model="stavka.artikalID" ng-options="artikal.artikalID as artikal.nazivArtikla for artikal in artikli">
+                                <option></option>
+                            </select>
+                        </td>
+                        <td>
+                            <input name="kolicina" id="kolicina" style="height: 25px;" type='text' ng-model="stavka.kolicina"/>
+                        </td>
+                        <td>
+                            <button class="btn btn-success btn-xs" ng-click="dodaj(stavka)" onclick="obrisi()">
+                                <span class="glyphicon glyphicon-plus"></span>&nbsp;Dodaj red
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <br/>
+                <div class="alert alert-warning" ng-if="msg">{{msg}}</div>
+                <br/>
+                <table class='table'>
+                    <thead><th>Artikal</th><th>Kolicina</th></thead>
+                    <tbody>
+                    <tr ng-repeat="stavka in noveStavke">
+                        <td>{{stavka.nazivArtikla}}</td>
+                        <td>{{stavka.kolicina}}</td>
+                    </tr>
+                    <tr class="alert alert-success"><td>Ukupna vrednost:</td><td>{{ukupnaVrednost}}</td></tr>
+                    <tbody>
+                </table>
+            </form><br/>
+        </div>
+        <div class="footer">
+            <button type="button" class="btn btn-primary" ng-click="dodaj('sacuvaj');" onclick="window.location.reload()">Sačuvaj izmene</button>
+            <button type="button" class="btn btn-danger" onclick="window.location.reload()">Poništi unos</button>
+        </div>
+    </div>
+</div>

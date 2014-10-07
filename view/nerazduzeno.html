@@ -12,21 +12,10 @@
         <th>&nbsp;</th>
         <th>&nbsp;</th>
         <th>&nbsp;</th>
-        <th>&nbsp;</th>
-        <th>&nbsp;</th>
     </tr>
     </thead>
     <tbody>
     <tr style="height: 45px;">
-		<td>
-			<label ng-click="orderByField = 'porudzbinaID'; reverseSort = !reverseSort">
-				<b>ID</b>
-				<span ng-show="orderByField == 'porudzbinaID'">
-					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-down"></span>
-					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-up"></span>
-				</span>
-			</label>
-		</td>
 		<td>
 			<label ng-click="orderByField = 'datumPorudzbine'; reverseSort = !reverseSort">
 				<b>Datum</b>
@@ -72,10 +61,9 @@
 				</span>
 			</label>
 		</td>
-		<td></td><td></td>
+		<td></td>
 	</tr>
     <tr ng-repeat='porudzbina in porudzbine | filter:search:strict | orderBy:orderByField:reverseSort' onload="JavaScript:timedRefresh(500);">
-        <td>{{porudzbina.porudzbinaID}}</td>
         <td>{{porudzbina.datumPorudzbine}}</td>
         <td>{{porudzbina.razduzeno}}</td>
         <td>{{porudzbina.napravljena}}</td>
