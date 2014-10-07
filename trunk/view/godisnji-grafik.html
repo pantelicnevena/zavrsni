@@ -1,0 +1,70 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Caffe</title>
+    <link rel='stylesheet' href='../css/bootstrap.css' />
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+    window.onload = function () {
+        var chart = new CanvasJS.Chart("chartContainer",
+                {
+                    title:{
+                        text: "Godisnji izvestaj"
+                    },
+                    axisX:{
+                        title: "Datum",
+                        gridThickness: 1
+                    },
+                    axisY: {
+                        title: "Prihodi"
+                    },
+                    data: [
+                        {
+                            type: "area",
+                            dataPoints: [//array
+                                { x: new Date(2014, 9, 08), y: 1295},
+                                { x: new Date(2014, 9, 07), y: 1215},
+                                { x: new Date(2014, 9, 06), y: 660},
+                                { x: new Date(2014, 9, 05), y: 2185},
+                                { x: new Date(2014, 9, 03), y: 300},
+                                { x: new Date(2014, 9, 02), y: 620},
+                                { x: new Date(2014, 9, 01), y: 330},
+                                { x: new Date(2014, 08, 29), y: 300},
+                                { x: new Date(2014, 08, 28), y: 600},
+                                { x: new Date(2014, 08, 27), y: 800},
+                                { x: new Date(2014, 08, 26), y: 200},
+                                { x: new Date(2014, 08, 09), y: 310},
+                                { x: new Date(2014, 08, 08), y: 465},
+                                { x: new Date(2014, 08, 07), y: 605},
+                                { x: new Date(2014, 08, 06), y: 580},
+                                { x: new Date(2014, 06, 20), y: 260},
+                                { x: new Date(2014, 06, 17), y: 300},
+                                { x: new Date(2014, 06, 15), y: 510},
+                                { x: new Date(2014, 06, 11), y: 810},
+                                { x: new Date(2014, 06, 10), y: 480},
+                                { x: new Date(2014, 06, 09), y: 305},
+                                { x: new Date(2014, 06, 07), y: 260},
+                                { x: new Date(2014, 06, 05), y: 350},
+                                { x: new Date(2014, 06, 04), y: 520},
+                                { x: new Date(2014, 06, 03), y: 500},
+                                { x: new Date(2014, 06, 02), y: 430},
+                                { x: new Date(2014, 05, 29), y: 420}
+                            ]
+                        }
+                    ]
+                });
+
+        chart.render();
+    }
+</script>
+</head>
+<body>
+    <div class='panel panel-default' >
+        <a class="btn btn-info" href="/zavrsni/#/godisnji">Nazad</a>
+        <script type="text/javascript" src="../js/canvasjs.js"></script>
+        <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+
+    </div>
+</body>
+</html>

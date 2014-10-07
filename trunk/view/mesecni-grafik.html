@@ -1,0 +1,50 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Caffe</title>
+    <link rel='stylesheet' href='../css/bootstrap.css' />
+    <script src="..js/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            var chart = new CanvasJS.Chart("chartContainer",
+                    {
+                        title:{
+                            text: "Mesecni izvestaj"
+                        },
+                        axisX:{
+                            title: "Datum",
+                            gridThickness: 1
+                        },
+                        axisY: {
+                            title: "Prihodi"
+                        },
+                        data: [
+                            {
+                                type: "area",
+                                dataPoints: [//array
+                                    { x: new Date(2014, 9, 08), y: 1295},
+                                    { x: new Date(2014, 9, 07), y: 1215},
+                                    { x: new Date(2014, 9, 06), y: 660},
+                                    { x: new Date(2014, 9, 05), y: 2185},
+                                    { x: new Date(2014, 9, 03), y: 300},
+                                    { x: new Date(2014, 9, 02), y: 620},
+                                    { x: new Date(2014, 9, 01), y: 330}
+                                ]
+                            }
+                        ]
+                    });
+
+            chart.render();
+        }
+    </script>
+</head>
+<body>
+<div class='panel panel-default' >
+    <a class="btn btn-info" href="/zavrsni/#/godisnji">Nazad</a>
+    <script type="text/javascript" src="../js/canvasjs.js"></script>
+    <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+
+</div>
+</body>
+</html>

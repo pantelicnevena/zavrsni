@@ -14,9 +14,8 @@ ______________________________________________________________________
 - upload slike	http://goo.gl/0sBa8s
 - ako nisu uneti podaci - alert-warning
 - navbar (Logout, Ime i prezime)
-- jChart (http://goo.gl/VNX0a, http://goo.gl/DiogE8)
-+ razduzi porudzbinu na dugme
-	UPDATE tabele
 - permisije za admina i zaposlenog
-+ paginacija
 - stolovi - slika
+- jChart (http://goo.gl/VNX0a, http://goo.gl/DiogE8)
+
+______________________________________________________________________

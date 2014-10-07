@@ -8,14 +8,13 @@
 <div class="clearfix" style="margin-bottom: 16px;"></div>
 
 <div class="panel panel-default"
-ng-repeat='porudzbina in porudzbine | filter:search:strict | orderBy:orderByField:reverseSort' id="{{porudzbina.porudzbinaID}}">
+ng-repeat='porudzbina in porudzbine | filter:search:strict | orderBy:orderByField:reverseSort'>
     <div class="panel-heading">
         ID: {{porudzbina.porudzbinaID}} <br/>
         Broj stola: {{porudzbina.stoID}}
         <div class="pull-right ">
             <div class="btn-group" ng-controller="PorudzbinaListCtrl" id="parent">
                 <a href="" class="btn btn-success" ng-click="porudzbina.napravljena = '1'; napravi(porudzbina);" onclick="window.location.reload()">Napravljeno</a>
-                <a href="#" class="btn btn-warning" >Izmeni</a>
             </div>
         </div>
         <div class="clearfix"></div>
@@ -40,65 +39,6 @@ ng-repeat='porudzbina in porudzbine | filter:search:strict | orderBy:orderByFiel
 
     </div>
 </div>
-		
-<table id="searchObjResults" class='table table-striped'>
-    <thead>
-    <tr>
-        <th>Porudžbina</th>
-        <th>&nbsp;</th>
-        <th>&nbsp;</th>
-        <th>&nbsp;</th>
-        <th>&nbsp;</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr style="height: 45px;">
-		<td>
-			<label ng-click="orderByField = 'porudzbinaID'; reverseSort = !reverseSort">
-				<b>ID</b>
-				<span ng-show="orderByField == 'porudzbinaID'">
-					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-down"></span>
-					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-up"></span>
-				</span>
-			</label>
-		</td>
-		<td>
-			<label ng-click="orderByField = 'razduzeno'; reverseSort = !reverseSort">
-				<b>Broj stola</b>
-				<span ng-show="orderByField == 'razduzeno'">
-					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-down"></span>
-					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-up"></span>
-				</span>
-			</label>
-		</td>
-		<td>
-			<label ng-click="orderByField = 'napravljena'; reverseSort = !reverseSort">
-				<b>Artikal</b>
-				<span ng-show="orderByField == 'napravljena'">
-					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-down"></span>
-					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-up"></span>
-				</span>
-			</label>
-		</td>
-		<td>
-			<label ng-click="orderByField = 'stoID'; reverseSort = !reverseSort">
-				<b>Količina</b>
-				<span ng-show="orderByField == 'stoID'">
-					<span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-down"></span>
-					<span ng-show="reverseSort" class="glyphicon glyphicon-chevron-up"></span>
-				</span>
-			</label>
-		</td>
-		<td><b></b></td>
-	</tr>
-    <tr ng-repeat='porudzbina in porudzbine | filter:search:strict | orderBy:orderByField:reverseSort'>
-        <td>{{porudzbina.porudzbinaID}}</td>
-        <td>{{porudzbina.stoID}}</td>
-        <td>{{porudzbina.nazivArtikla}}</td>
-        <td>{{porudzbina.kolicina}}</td>
-        <td><button role='button' class='btn btn-warning' ng-click="izmeniPorudzbinu(porudzbina);" data-toggle="modal" href="#editModal">Izmeni</button></td>
-    </tr>
-    </tbody>
-</table>
-<div class="modal fade"  tabindex="-1" role="dialog" ng-include="'view/porudzbina-detalji.html'" id="editModal" aria-hidden="true"></div>
+
+
 </div>
